@@ -1,363 +1,1174 @@
 {
-  "asOf": "2026-09-09",
-  "status": "Initial template build",
-  "dataPolicy": "Do not publish market values unless they are verified. Use — for unverified values.",
-  "today": {
-    "session": "Global handoff",
-    "focus": [
-      "Verify primary market levels before writing commentary.",
-      "Separate observed facts from interpretation and forward-looking views.",
-      "Track Korea market moves against global rates, FX, risk, and liquidity context.",
-      "Flag data gaps explicitly and keep unverified values as —.",
-      "Capture digital asset signals alongside traditional macro risk indicators."
+  "metadata": {
+    "asOf": "2026-09-10T00:00:00+09:00",
+    "lastSuccessfulUpdate": null,
+    "status": "setup",
+    "dataPolicy": "Do not publish market values unless they are verified. Use — for unverified values.",
+    "notes": [
+      "Initial Phase 2 schema upgrade only.",
+      "All live market values remain placeholder-only until verified."
     ]
   },
-  "regimeMap": [
-    {
-      "label": "Growth",
-      "value": "—"
+  "today": {
+    "date": "2026-09-10",
+    "currentBriefingPath": "data/daily/2026-09-10.json",
+    "macroRegime": {
+      "inflationRisk": "—",
+      "growthMomentum": "—",
+      "policyBias": "—",
+      "liquidity": "—",
+      "riskAppetite": "—",
+      "regimeSummary": "—"
     },
-    {
-      "label": "Inflation",
-      "value": "—"
-    },
-    {
-      "label": "Policy",
-      "value": "—"
-    },
-    {
-      "label": "Liquidity",
-      "value": "—"
-    },
-    {
-      "label": "Risk Appetite",
-      "value": "—"
-    },
-    {
-      "label": "USD Trend",
-      "value": "—"
-    },
-    {
-      "label": "Korea Macro",
-      "value": "—"
-    },
-    {
-      "label": "Crypto Beta",
-      "value": "—"
-    }
-  ],
-  "regionalDashboards": [
-    {
-      "id": "global",
-      "kicker": "Global dashboard",
-      "title": "Global Macro Snapshot",
-      "description": "Top-down monitor for the broad cross-asset backdrop.",
-      "tiles": [
-        {
-          "label": "US real yield impulse",
-          "value": "—",
-          "note": "Use verified Treasury and inflation market data."
-        },
-        {
-          "label": "Global equity breadth",
-          "value": "—",
-          "note": "Track major index participation and leadership."
-        },
-        {
-          "label": "Credit risk tone",
-          "value": "—",
-          "note": "Compare IG/HY spreads, CDS, and primary issuance."
-        },
-        {
-          "label": "Commodity inflation pulse",
-          "value": "—",
-          "note": "Review energy, metals, and agricultural price signals."
-        }
-      ]
-    },
-    {
-      "id": "korea",
-      "kicker": "Korea dashboard",
-      "title": "Korea Market Snapshot",
-      "description": "KRW, KTB, KOSPI, credit, and external liquidity watch.",
-      "tiles": [
-        {
-          "label": "USD/KRW",
-          "value": "—",
-          "note": "Verify spot and fixing source before publication."
-        },
-        {
-          "label": "KTB curve",
-          "value": "—",
-          "note": "Monitor 3Y, 10Y, curve shape, and auction calendar."
-        },
-        {
-          "label": "KOSPI / KOSDAQ tone",
-          "value": "—",
-          "note": "Separate index levels from sector leadership notes."
-        },
-        {
-          "label": "Foreign flow signal",
-          "value": "—",
-          "note": "Track equity and bond flow context from verified sources."
-        }
-      ]
-    }
-  ],
-  "sections": [
-    {
-      "id": "rates",
-      "title": "Rates",
-      "description": "Policy, curves, duration, breakevens.",
-      "instruments": [
-        {
-          "name": "Fed funds target",
-          "value": "—",
-          "note": "Federal Reserve target range."
-        },
-        {
-          "name": "US 2Y",
-          "value": "—",
-          "note": "Front-end Treasury yield."
-        },
-        {
-          "name": "US 10Y",
-          "value": "—",
-          "note": "Benchmark Treasury yield."
-        },
-        {
-          "name": "KTB 3Y",
-          "value": "—",
-          "note": "Korea Treasury Bond 3-year yield."
-        },
-        {
-          "name": "KTB 10Y",
-          "value": "—",
-          "note": "Korea Treasury Bond 10-year yield."
-        }
-      ]
-    },
-    {
-      "id": "fx",
-      "title": "FX",
-      "description": "Dollar, KRW, JPY, CNH, carry.",
-      "instruments": [
-        {
-          "name": "DXY",
-          "value": "—",
-          "note": "US Dollar Index."
-        },
-        {
-          "name": "EUR/USD",
-          "value": "—",
-          "note": "Euro versus US dollar."
-        },
-        {
-          "name": "USD/JPY",
-          "value": "—",
-          "note": "US dollar versus Japanese yen."
-        },
-        {
-          "name": "USD/KRW",
-          "value": "—",
-          "note": "US dollar versus Korean won."
-        },
-        {
-          "name": "USD/CNH",
-          "value": "—",
-          "note": "Offshore renminbi."
-        }
-      ]
-    },
-    {
-      "id": "equities",
-      "title": "Equities",
-      "description": "Index levels, breadth, factors.",
-      "instruments": [
-        {
-          "name": "S&P 500",
-          "value": "—",
-          "note": "US large-cap benchmark."
-        },
-        {
-          "name": "Nasdaq 100",
-          "value": "—",
-          "note": "US growth and technology benchmark."
-        },
-        {
-          "name": "Euro Stoxx 50",
-          "value": "—",
-          "note": "Euro area blue-chip benchmark."
-        },
-        {
-          "name": "KOSPI",
-          "value": "—",
-          "note": "Korea Composite Stock Price Index."
-        },
-        {
-          "name": "MSCI EM",
-          "value": "—",
-          "note": "Emerging markets equity benchmark."
-        }
-      ]
-    },
-    {
-      "id": "credit",
-      "title": "Credit",
-      "description": "Spreads, funding, issuance.",
-      "instruments": [
-        {
-          "name": "US IG spread",
-          "value": "—",
-          "note": "Investment grade spread proxy."
-        },
-        {
-          "name": "US HY spread",
-          "value": "—",
-          "note": "High yield spread proxy."
-        },
-        {
-          "name": "CDX IG",
-          "value": "—",
-          "note": "North America investment grade CDS index."
-        },
-        {
-          "name": "CDX HY",
-          "value": "—",
-          "note": "North America high yield CDS index."
-        },
-        {
-          "name": "Korea credit spread",
-          "value": "—",
-          "note": "Local credit spread placeholder."
-        }
-      ]
-    },
-    {
-      "id": "commodities",
-      "title": "Commodities",
-      "description": "Energy, metals, macro supply shocks.",
-      "instruments": [
-        {
-          "name": "Brent crude",
-          "value": "—",
-          "note": "Global crude oil benchmark."
-        },
-        {
-          "name": "WTI crude",
-          "value": "—",
-          "note": "US crude oil benchmark."
-        },
-        {
-          "name": "Gold",
-          "value": "—",
-          "note": "Precious metal and real-rate hedge monitor."
-        },
-        {
-          "name": "Copper",
-          "value": "—",
-          "note": "Cyclical industrial metal monitor."
-        },
-        {
-          "name": "LNG / gas",
-          "value": "—",
-          "note": "Energy import and inflation sensitivity monitor."
-        }
-      ]
-    }
-  ],
-  "digitalAssets": {
-    "indicators": [
+    "dashboardSignals": [
       {
-        "label": "BTC spot",
-        "value": "—",
-        "note": "Verify exchange composite or trusted index."
+        "title": "Oil and yields",
+        "observation": "—",
+        "interpretation": "—",
+        "confidence": "—",
+        "relatedAssets": ["Brent", "UST 10Y", "S&P 500"]
       },
       {
-        "label": "ETH spot",
-        "value": "—",
-        "note": "Verify exchange composite or trusted index."
+        "title": "USD and KRW",
+        "observation": "—",
+        "interpretation": "—",
+        "confidence": "—",
+        "relatedAssets": ["DXY", "USD/KRW", "KOSPI"]
       },
       {
-        "label": "BTC dominance",
-        "value": "—",
-        "note": "Market share of BTC within crypto assets."
+        "title": "Equity breadth and volatility",
+        "observation": "—",
+        "interpretation": "—",
+        "confidence": "—",
+        "relatedAssets": ["S&P 500", "Nasdaq 100", "VIX"]
       },
       {
-        "label": "Total crypto market cap",
-        "value": "—",
-        "note": "Use a named provider and timestamp."
-      },
-      {
-        "label": "Stablecoin supply",
-        "value": "—",
-        "note": "Liquidity proxy, verify source methodology."
-      },
-      {
-        "label": "Crypto vol / funding",
-        "value": "—",
-        "note": "Track derivatives positioning and leverage."
+        "title": "Crypto and liquidity",
+        "observation": "—",
+        "interpretation": "—",
+        "confidence": "—",
+        "relatedAssets": ["BTC/USD", "ETH/USD", "US real yields"]
       }
     ],
-    "watchFramework": [
-      "Map BTC and ETH to global liquidity, real yields, USD, and equity beta.",
-      "Separate spot ETF or flow observations from price interpretation.",
-      "Note exchange, custody, regulatory, and stablecoin headlines only from primary or reputable sources.",
-      "Record the exact provider and timestamp for any crypto metric used in a briefing."
+    "researchChecklist": [
+      "Verify primary market levels before writing commentary.",
+      "Separate observed facts from reported drivers and model interpretation.",
+      "Track Korea market moves against global rates, FX, risk, and liquidity context.",
+      "Flag stale or missing data explicitly.",
+      "Keep unverified market values as —."
     ]
   },
+  "marketDashboardGroups": [
+    {
+      "id": "global-dashboard",
+      "kicker": "Global",
+      "title": "Global Macro Dashboard",
+      "description": "Rates, dollar, equities, volatility, and commodity pulse.",
+      "instrumentIds": ["ust10y", "us2s10s", "dxy", "spx", "vix", "brent"]
+    },
+    {
+      "id": "korea-dashboard",
+      "kicker": "Korea",
+      "title": "Korea Macro Dashboard",
+      "description": "BOK, KTB, KRW, local equity, and sovereign risk watch.",
+      "instrumentIds": ["bok_base_rate", "ktb10y", "usdkrw", "kospi", "kosdaq", "korea_5y_cds"]
+    },
+    {
+      "id": "digital-dashboard",
+      "kicker": "Digital Assets",
+      "title": "Crypto Macro Dashboard",
+      "description": "BTC, ETH, market cap, dominance, ETF flow, and derivatives placeholders.",
+      "instrumentIds": ["btcusd", "ethusd", "total_crypto_mcap", "btc_dominance", "btc_etf_flow", "perpetual_funding"]
+    }
+  ],
+  "assetClassBoards": [
+    {
+      "id": "rates-policy",
+      "kicker": "Rates",
+      "title": "Global Rates / Policy",
+      "description": "Policy expectations, Treasury curve, inflation compensation, and major DM duration.",
+      "instrumentIds": ["fed_target_range", "fed_path", "ust2y", "ust10y", "ust30y", "us2s10s", "us10y_real_yield", "us10y_breakeven", "bund10y", "gilt10y", "jgb10y"]
+    },
+    {
+      "id": "korea-rates",
+      "kicker": "Rates",
+      "title": "Korea Rates",
+      "description": "BOK policy, KTB curve, and short-rate benchmarks.",
+      "instrumentIds": ["bok_base_rate", "ktb3y", "ktb10y", "korea3s10s", "kofr_cd91d"]
+    },
+    {
+      "id": "fx-board",
+      "kicker": "FX",
+      "title": "FX",
+      "description": "Dollar, major pairs, China proxy, and KRW external balance signal.",
+      "instrumentIds": ["dxy", "eurusd", "usdjpy", "usdcnh", "usdkrw"]
+    },
+    {
+      "id": "equities-vol-board",
+      "kicker": "Equities / Vol",
+      "title": "Equities / Volatility",
+      "description": "Global equity benchmarks and volatility stress gauges.",
+      "instrumentIds": ["spx", "ndx", "sx5e", "nikkei225", "kospi", "kosdaq", "vix", "move"]
+    },
+    {
+      "id": "credit-board",
+      "kicker": "Credit",
+      "title": "Credit",
+      "description": "Cash spread proxies, CDS indices, and Korea sovereign risk.",
+      "instrumentIds": ["us_ig_spread", "us_hy_spread", "cdx_ig", "cdx_hy", "korea_5y_cds"]
+    },
+    {
+      "id": "commodities-board",
+      "kicker": "Commodities",
+      "title": "Commodities",
+      "description": "Energy, precious metals, and cyclical industrial metal signals.",
+      "instrumentIds": ["brent", "wti", "gold", "copper"]
+    }
+  ],
+  "instruments": [
+    {
+      "id": "fed_target_range",
+      "name": "Fed target range",
+      "assetClass": "Rates",
+      "region": "US",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "fed_path",
+      "name": "Market-implied Fed path",
+      "assetClass": "Rates",
+      "region": "US",
+      "unit": "bp",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "ust2y",
+      "name": "US Treasury 2Y",
+      "assetClass": "Rates",
+      "region": "US",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "ust10y",
+      "name": "US Treasury 10Y",
+      "assetClass": "Rates",
+      "region": "US",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "ust30y",
+      "name": "US Treasury 30Y",
+      "assetClass": "Rates",
+      "region": "US",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "us2s10s",
+      "name": "US 2s10s",
+      "assetClass": "Rates",
+      "region": "US",
+      "unit": "bp",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "us10y_real_yield",
+      "name": "US 10Y real yield",
+      "assetClass": "Rates",
+      "region": "US",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "us10y_breakeven",
+      "name": "US 10Y breakeven inflation",
+      "assetClass": "Rates",
+      "region": "US",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "bund10y",
+      "name": "German Bund 10Y",
+      "assetClass": "Rates",
+      "region": "Germany",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "gilt10y",
+      "name": "UK Gilt 10Y",
+      "assetClass": "Rates",
+      "region": "UK",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "jgb10y",
+      "name": "Japan JGB 10Y",
+      "assetClass": "Rates",
+      "region": "Japan",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "bok_base_rate",
+      "name": "BOK base rate",
+      "assetClass": "Rates",
+      "region": "Korea",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "ktb3y",
+      "name": "KTB 3Y",
+      "assetClass": "Rates",
+      "region": "Korea",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "ktb10y",
+      "name": "KTB 10Y",
+      "assetClass": "Rates",
+      "region": "Korea",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "korea3s10s",
+      "name": "Korea 3s10s",
+      "assetClass": "Rates",
+      "region": "Korea",
+      "unit": "bp",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "kofr_cd91d",
+      "name": "KOFR or CD 91D",
+      "assetClass": "Rates",
+      "region": "Korea",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "dxy",
+      "name": "DXY",
+      "assetClass": "FX",
+      "region": "US",
+      "unit": "index",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "points",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "eurusd",
+      "name": "EUR/USD",
+      "assetClass": "FX",
+      "region": "Euro Area",
+      "unit": "USD",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "usdjpy",
+      "name": "USD/JPY",
+      "assetClass": "FX",
+      "region": "Japan",
+      "unit": "JPY",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "usdcnh",
+      "name": "USD/CNH",
+      "assetClass": "FX",
+      "region": "China",
+      "unit": "CNH",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "usdkrw",
+      "name": "USD/KRW",
+      "assetClass": "FX",
+      "region": "Korea",
+      "unit": "KRW",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "spx",
+      "name": "S&P 500",
+      "assetClass": "Equities",
+      "region": "US",
+      "unit": "index",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "ndx",
+      "name": "Nasdaq 100",
+      "assetClass": "Equities",
+      "region": "US",
+      "unit": "index",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "sx5e",
+      "name": "Euro Stoxx 50",
+      "assetClass": "Equities",
+      "region": "Euro Area",
+      "unit": "index",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "nikkei225",
+      "name": "Nikkei 225",
+      "assetClass": "Equities",
+      "region": "Japan",
+      "unit": "index",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "kospi",
+      "name": "KOSPI",
+      "assetClass": "Equities",
+      "region": "Korea",
+      "unit": "index",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "kosdaq",
+      "name": "KOSDAQ",
+      "assetClass": "Equities",
+      "region": "Korea",
+      "unit": "index",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "vix",
+      "name": "VIX",
+      "assetClass": "Volatility",
+      "region": "US",
+      "unit": "index",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "points",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "move",
+      "name": "MOVE",
+      "assetClass": "Volatility",
+      "region": "US",
+      "unit": "index",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "points",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "us_ig_spread",
+      "name": "US IG spread",
+      "assetClass": "Credit",
+      "region": "US",
+      "unit": "bp",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "us_hy_spread",
+      "name": "US HY spread",
+      "assetClass": "Credit",
+      "region": "US",
+      "unit": "bp",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "cdx_ig",
+      "name": "CDX IG",
+      "assetClass": "Credit",
+      "region": "US",
+      "unit": "bp",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "cdx_hy",
+      "name": "CDX HY",
+      "assetClass": "Credit",
+      "region": "US",
+      "unit": "bp",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "korea_5y_cds",
+      "name": "Korea 5Y sovereign CDS",
+      "assetClass": "Credit",
+      "region": "Korea",
+      "unit": "bp",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "brent",
+      "name": "Brent",
+      "assetClass": "Commodities",
+      "region": "Global",
+      "unit": "USD/bbl",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "wti",
+      "name": "WTI",
+      "assetClass": "Commodities",
+      "region": "US",
+      "unit": "USD/bbl",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "gold",
+      "name": "Gold",
+      "assetClass": "Commodities",
+      "region": "Global",
+      "unit": "USD/oz",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "copper",
+      "name": "Copper",
+      "assetClass": "Commodities",
+      "region": "Global",
+      "unit": "USD/lb",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "btcusd",
+      "name": "BTC/USD",
+      "assetClass": "Digital Assets",
+      "region": "Global",
+      "unit": "USD",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "ethusd",
+      "name": "ETH/USD",
+      "assetClass": "Digital Assets",
+      "region": "Global",
+      "unit": "USD",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "total_crypto_mcap",
+      "name": "Total crypto market cap",
+      "assetClass": "Digital Assets",
+      "region": "Global",
+      "unit": "USD",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "%",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "btc_dominance",
+      "name": "BTC dominance",
+      "assetClass": "Digital Assets",
+      "region": "Global",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "pp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "btc_etf_flow",
+      "name": "US spot BTC ETF flow",
+      "assetClass": "Digital Assets",
+      "region": "US",
+      "unit": "USD",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "USD",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "eth_etf_flow",
+      "name": "US spot ETH ETF flow",
+      "assetClass": "Digital Assets",
+      "region": "US",
+      "unit": "USD",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "USD",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "cme_btc_oi_basis",
+      "name": "CME BTC futures OI / basis",
+      "assetClass": "Digital Assets",
+      "region": "US",
+      "unit": "mixed",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "mixed",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "btc_options_iv_skew",
+      "name": "BTC options IV/skew",
+      "assetClass": "Digital Assets",
+      "region": "Global",
+      "unit": "mixed",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "mixed",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    },
+    {
+      "id": "perpetual_funding",
+      "name": "Perpetual funding",
+      "assetClass": "Digital Assets",
+      "region": "Global",
+      "unit": "%",
+      "latest": "—",
+      "change1d": "—",
+      "change1w": "—",
+      "changeUnit": "bp",
+      "timestamp": "—",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false,
+      "status": "unverified",
+      "interpretation": "—"
+    }
+  ],
   "calendar": [
     {
       "date": "—",
       "time": "—",
+      "timezone": "—",
       "region": "US",
       "event": "Inflation release",
       "importance": "High",
       "actual": "—",
       "consensus": "—",
-      "previous": "—"
+      "previous": "—",
+      "surprise": "—",
+      "status": "Upcoming",
+      "whyItMatters": "—",
+      "sensitiveMarkets": ["Rates", "FX", "Equities"],
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false
     },
     {
       "date": "—",
       "time": "—",
+      "timezone": "—",
       "region": "Korea",
       "event": "Bank of Korea decision",
       "importance": "High",
       "actual": "—",
       "consensus": "—",
-      "previous": "—"
+      "previous": "—",
+      "surprise": "—",
+      "status": "Upcoming",
+      "whyItMatters": "—",
+      "sensitiveMarkets": ["Rates", "FX", "Korea equities"],
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false
     },
     {
       "date": "—",
       "time": "—",
+      "timezone": "—",
       "region": "Euro Area",
       "event": "ECB policy communication",
       "importance": "Medium",
       "actual": "—",
       "consensus": "—",
-      "previous": "—"
+      "previous": "—",
+      "surprise": "—",
+      "status": "Upcoming",
+      "whyItMatters": "—",
+      "sensitiveMarkets": ["Rates", "EUR/USD", "Credit"],
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false
     },
     {
       "date": "—",
       "time": "—",
+      "timezone": "—",
       "region": "China",
       "event": "Activity data",
       "importance": "Medium",
       "actual": "—",
       "consensus": "—",
-      "previous": "—"
+      "previous": "—",
+      "surprise": "—",
+      "status": "Upcoming",
+      "whyItMatters": "—",
+      "sensitiveMarkets": ["USD/CNH", "Commodities", "Korea equities"],
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false
     },
     {
       "date": "—",
       "time": "—",
+      "timezone": "—",
       "region": "Global",
       "event": "Major central bank speaker",
       "importance": "Medium",
       "actual": "—",
       "consensus": "—",
-      "previous": "—"
+      "previous": "—",
+      "surprise": "—",
+      "status": "Upcoming",
+      "whyItMatters": "—",
+      "sensitiveMarkets": ["Rates", "FX", "Risk assets"],
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "verified": false
     }
   ],
+  "positioningFlows": {
+    "hardData": [
+      {
+        "id": "cftc_positioning",
+        "category": "CFTC positioning",
+        "frequency": "weekly",
+        "region": "Global",
+        "latest": "—",
+        "timestamp": "—",
+        "sourceName": "—",
+        "sourceUrl": "—",
+        "verified": false,
+        "status": "unverified",
+        "interpretation": "—"
+      },
+      {
+        "id": "etf_fund_flows",
+        "category": "ETF / fund flows",
+        "frequency": "daily / weekly",
+        "region": "Global",
+        "latest": "—",
+        "timestamp": "—",
+        "sourceName": "—",
+        "sourceUrl": "—",
+        "verified": false,
+        "status": "unverified",
+        "interpretation": "—"
+      },
+      {
+        "id": "korea_foreign_equity_flow",
+        "category": "Korea foreign equity flow",
+        "frequency": "daily",
+        "region": "Korea",
+        "latest": "—",
+        "timestamp": "—",
+        "sourceName": "—",
+        "sourceUrl": "—",
+        "verified": false,
+        "status": "unverified",
+        "interpretation": "—"
+      },
+      {
+        "id": "korea_foreign_bond_flow",
+        "category": "Korea foreign bond flow",
+        "frequency": "daily / monthly",
+        "region": "Korea",
+        "latest": "—",
+        "timestamp": "—",
+        "sourceName": "—",
+        "sourceUrl": "—",
+        "verified": false,
+        "status": "unverified",
+        "interpretation": "—"
+      },
+      {
+        "id": "treasury_auction_metrics",
+        "category": "Treasury auction metrics",
+        "frequency": "auction",
+        "region": "US",
+        "latest": "—",
+        "timestamp": "—",
+        "sourceName": "—",
+        "sourceUrl": "—",
+        "verified": false,
+        "status": "unverified",
+        "interpretation": "—"
+      },
+      {
+        "id": "crypto_etf_flows",
+        "category": "Crypto ETF flows",
+        "frequency": "daily",
+        "region": "US",
+        "latest": "—",
+        "timestamp": "—",
+        "sourceName": "—",
+        "sourceUrl": "—",
+        "verified": false,
+        "status": "unverified",
+        "interpretation": "—"
+      }
+    ],
+    "marketInference": [
+      {
+        "id": "options_implied_pricing",
+        "category": "Options implied pricing",
+        "frequency": "daily",
+        "region": "Global",
+        "latest": "—",
+        "timestamp": "—",
+        "sourceName": "—",
+        "sourceUrl": "—",
+        "verified": false,
+        "status": "unverified",
+        "interpretation": "—"
+      },
+      {
+        "id": "central_bank_path_pricing",
+        "category": "Central-bank path pricing",
+        "frequency": "daily",
+        "region": "Global",
+        "latest": "—",
+        "timestamp": "—",
+        "sourceName": "—",
+        "sourceUrl": "—",
+        "verified": false,
+        "status": "unverified",
+        "interpretation": "—"
+      },
+      {
+        "id": "futures_oi_basis",
+        "category": "Futures OI / basis",
+        "frequency": "daily",
+        "region": "Global",
+        "latest": "—",
+        "timestamp": "—",
+        "sourceName": "—",
+        "sourceUrl": "—",
+        "verified": false,
+        "status": "unverified",
+        "interpretation": "—"
+      },
+      {
+        "id": "crypto_funding_basis",
+        "category": "Crypto funding / basis",
+        "frequency": "intraday / daily",
+        "region": "Global",
+        "latest": "—",
+        "timestamp": "—",
+        "sourceName": "—",
+        "sourceUrl": "—",
+        "verified": false,
+        "status": "unverified",
+        "interpretation": "—"
+      }
+    ]
+  },
+  "digitalAssets": {
+    "cryptoSignal": {
+      "classification": "—",
+      "summary": "—",
+      "macroDrivers": [],
+      "cryptoSpecificDrivers": []
+    },
+    "coreIds": ["btcusd", "ethusd"],
+    "optionalIds": ["total_crypto_mcap", "btc_dominance", "btc_etf_flow", "eth_etf_flow", "cme_btc_oi_basis", "btc_options_iv_skew", "perpetual_funding"],
+    "watchFramework": [
+      "Classify crypto as high-beta risk asset, liquidity-sensitive asset, crypto-specific catalyst, or mixed only after evidence is verified.",
+      "Record provider, timestamp, and methodology for BTC, ETH, ETF flow, futures, funding, and options data.",
+      "Separate macro drivers from crypto-specific catalysts."
+    ]
+  },
   "glossary": [
     {
       "term": "Duration",
@@ -373,6 +1184,16 @@
       "term": "Breakeven inflation",
       "assetClass": "Rates",
       "definition": "The market-implied inflation rate derived from nominal Treasury yields and inflation-linked bond yields."
+    },
+    {
+      "term": "Real yield",
+      "assetClass": "Rates",
+      "definition": "A yield measure adjusted for expected inflation, often watched as a liquidity and valuation signal."
+    },
+    {
+      "term": "Term premium",
+      "assetClass": "Rates",
+      "definition": "Compensation investors may require for holding longer-maturity bonds instead of rolling short-term debt."
     },
     {
       "term": "Carry",
@@ -395,14 +1216,9 @@
       "definition": "A credit default swap, a derivative used to transfer or hedge default risk."
     },
     {
-      "term": "Risk parity",
-      "assetClass": "Portfolio",
-      "definition": "A portfolio approach that allocates risk more evenly across asset classes rather than allocating capital evenly."
-    },
-    {
-      "term": "Term premium",
-      "assetClass": "Rates",
-      "definition": "Compensation investors may require for holding longer-maturity bonds instead of rolling short-term debt."
+      "term": "MOVE index",
+      "assetClass": "Volatility",
+      "definition": "A commonly watched index of implied volatility in US Treasury markets."
     },
     {
       "term": "Funding rate",
@@ -418,38 +1234,63 @@
       "term": "On-chain flow",
       "assetClass": "Digital Assets",
       "definition": "Observable blockchain transaction activity used as one input in digital asset market analysis."
+    },
+    {
+      "term": "Basis",
+      "assetClass": "Derivatives",
+      "definition": "The difference between a futures price and the underlying spot price, often used to infer positioning or funding pressure."
     }
   ],
-  "sourceHierarchy": [
-    {
-      "rank": 1,
-      "name": "Primary official sources",
-      "useFor": "Policy rates, macro statistics, official calendars, auction details, and regulatory notices.",
-      "examples": ["central banks", "statistics agencies", "finance ministries"]
+  "methodology": {
+    "permanentRule": {
+      "title": "Observed Market Data ≠ Reported Driver ≠ Model Interpretation",
+      "description": "Do not imply causality from price co-movement alone. Label observed prices, externally reported drivers, and your own interpretation as separate evidence layers.",
+      "labels": [
+        {
+          "name": "Observed Market Data",
+          "kind": "primary"
+        },
+        {
+          "name": "Reported Driver",
+          "kind": "inference"
+        },
+        {
+          "name": "Model Interpretation",
+          "kind": "interpretation"
+        }
+      ]
     },
-    {
-      "rank": 2,
-      "name": "Exchange and issuer sources",
-      "useFor": "Listed market prices, index notices, exchange trading data, and official company or issuer releases.",
-      "examples": ["exchanges", "index providers", "issuer filings"]
-    },
-    {
-      "rank": 3,
-      "name": "Established market data vendors",
-      "useFor": "Real-time levels, histories, calculated spreads, and cross-asset dashboards.",
-      "examples": ["Bloomberg", "LSEG", "FactSet"]
-    },
-    {
-      "rank": 4,
-      "name": "Reputable financial media",
-      "useFor": "Narrative context, reported policy commentary, and market color after facts are confirmed.",
-      "examples": ["Reuters", "Financial Times", "Wall Street Journal"]
-    },
-    {
-      "rank": 5,
-      "name": "Specialist research and crypto providers",
-      "useFor": "Supplementary analytics with explicit provider, timestamp, and methodology notes.",
-      "examples": ["sell-side research", "on-chain analytics", "ETF flow trackers"]
-    }
-  ]
+    "sourceHierarchy": [
+      {
+        "rank": 1,
+        "name": "Primary official sources",
+        "useFor": "Policy rates, macro statistics, official calendars, auction details, and regulatory notices.",
+        "examples": ["central banks", "statistics agencies", "finance ministries"]
+      },
+      {
+        "rank": 2,
+        "name": "Exchanges / regulators / issuers",
+        "useFor": "Listed market prices, index notices, exchange trading data, official filings, and regulatory releases.",
+        "examples": ["exchanges", "regulators", "issuer filings"]
+      },
+      {
+        "rank": 3,
+        "name": "Reliable market-data providers",
+        "useFor": "Real-time levels, histories, calculated spreads, curves, vol surfaces, and cross-asset dashboards.",
+        "examples": ["Bloomberg", "LSEG", "FactSet"]
+      },
+      {
+        "rank": 4,
+        "name": "Reputable financial media",
+        "useFor": "Narrative context, reported policy commentary, and market color after core facts are confirmed.",
+        "examples": ["Reuters", "Financial Times", "Wall Street Journal"]
+      },
+      {
+        "rank": 5,
+        "name": "Specialist research / analytics",
+        "useFor": "Supplementary analytics with explicit provider, timestamp, assumptions, and methodology notes.",
+        "examples": ["sell-side research", "on-chain analytics", "ETF flow trackers"]
+      }
+    ]
+  }
 }

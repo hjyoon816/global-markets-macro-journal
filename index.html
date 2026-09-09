@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Personal Global Markets, Macro, and FICC research journal covering rates, FX, equities, credit, commodities, Korea markets, and digital assets."
+      content="Personal Global Markets, Macro, and FICC research terminal covering rates, FX, equities, credit, commodities, Korea markets, and digital assets."
     />
     <title>Global Markets Macro Journal</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js" defer></script>
+    <script src="app.js" defer></script>
   </head>
   <body>
     <header class="site-header" id="top">
@@ -16,102 +18,108 @@
         <span class="brand-mark" aria-hidden="true">GM</span>
         <span>
           <span class="brand-title">Global Markets Macro Journal</span>
-          <span class="brand-subtitle">FICC research notebook</span>
+          <span class="brand-subtitle">Macro / FICC research terminal</span>
         </span>
       </a>
       <nav class="site-nav" aria-label="Primary navigation">
         <a href="#today">Today</a>
         <a href="#markets">Markets</a>
-        <a href="#digital-assets">Digital Assets</a>
-        <a href="#briefings">Briefings</a>
+        <a href="#stories">Top 5</a>
+        <a href="#charts">Charts</a>
         <a href="#calendar">Calendar</a>
+        <a href="#positioning">Flows</a>
+        <a href="#digital-assets">Digital</a>
+        <a href="#briefings">Archive</a>
         <a href="#learn">Learn</a>
-        <a href="#methodology">Methodology</a>
       </nav>
     </header>
 
     <main>
-      <section class="today-grid section-band" id="today" aria-labelledby="today-heading">
-        <div class="hero-panel">
-          <p class="eyebrow">Today dashboard</p>
-          <h1 id="today-heading">Global Markets Macro Journal</h1>
-          <p class="lead">
-            A disciplined daily workspace for Global Macro, FICC, Korea markets,
-            and digital asset observations.
-          </p>
-          <div class="status-row" aria-label="Dashboard data status">
-            <span class="status-pill neutral">Template build</span>
-            <span class="status-pill">Unverified values shown as —</span>
-            <span class="status-pill" id="as-of-pill">As of —</span>
+      <section class="terminal-hero" id="today" aria-labelledby="today-heading">
+        <div class="terminal-titlebar">
+          <div>
+            <p class="eyebrow">Today dashboard</p>
+            <h1 id="today-heading">Global Markets Macro Journal</h1>
           </div>
+          <div class="data-status" id="data-status-banner" aria-live="polite"></div>
         </div>
 
-        <aside class="daily-brief" aria-labelledby="daily-brief-heading">
-          <div class="section-heading compact">
-            <p class="eyebrow">Daily pulse</p>
-            <h2 id="daily-brief-heading">Research Checklist</h2>
-          </div>
-          <ul class="checklist" id="today-focus-list"></ul>
-        </aside>
-      </section>
+        <div class="top-grid">
+          <article class="panel regime-panel" aria-labelledby="regime-heading">
+            <div class="panel-header">
+              <p class="eyebrow">Today's macro regime</p>
+              <h2 id="regime-heading">Regime Monitor</h2>
+            </div>
+            <dl class="regime-list" id="macro-regime-list"></dl>
+            <p class="regime-summary" id="regime-summary">—</p>
+          </article>
 
-      <section class="content-section" aria-labelledby="cross-asset-heading">
-        <div class="section-heading">
-          <p class="eyebrow">Cross-asset lens</p>
-          <h2 id="cross-asset-heading">Market Regime Map</h2>
-        </div>
-        <div class="regime-map" id="regime-map" aria-label="Market regime map"></div>
-      </section>
+          <article class="panel signals-panel" aria-labelledby="signals-heading">
+            <div class="panel-header">
+              <p class="eyebrow">Dashboard signals today</p>
+              <h2 id="signals-heading">Cross-Asset Signals</h2>
+            </div>
+            <div class="signals-list" id="dashboard-signals"></div>
+          </article>
 
-      <section class="content-section" id="markets" aria-labelledby="markets-heading">
-        <div class="section-heading">
-          <p class="eyebrow">Global + Korea market dashboard</p>
-          <h2 id="markets-heading">Macro Monitors</h2>
-        </div>
-        <div class="region-grid" id="region-grid"></div>
-      </section>
-
-      <section class="content-section" aria-labelledby="asset-classes-heading">
-        <div class="section-heading">
-          <p class="eyebrow">Rates, FX, Equities, Credit, Commodities</p>
-          <h2 id="asset-classes-heading">Asset Class Boards</h2>
-        </div>
-        <div class="asset-board" id="asset-board"></div>
-      </section>
-
-      <section class="content-section" id="digital-assets" aria-labelledby="digital-heading">
-        <div class="section-heading">
-          <p class="eyebrow">BTC, ETH, crypto market indicators</p>
-          <h2 id="digital-heading">Digital Assets</h2>
-        </div>
-        <div class="digital-layout">
-          <div class="metric-grid" id="digital-metrics"></div>
-          <div class="watch-panel">
-            <h3>Crypto Watch Framework</h3>
-            <ul id="digital-watch-list"></ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="content-section" id="briefings" aria-labelledby="briefings-heading">
-        <div class="section-heading">
-          <p class="eyebrow">Daily Briefings archive</p>
-          <h2 id="briefings-heading">Research Archive</h2>
-        </div>
-        <div class="archive-layout">
-          <div class="archive-list" id="archive-list"></div>
-          <article class="briefing-view" id="briefing-view" aria-live="polite">
-            <p class="eyebrow">Selected briefing</p>
-            <h3>Choose a briefing</h3>
-            <p>Select an archive item to load its daily JSON note.</p>
+          <article class="panel checklist-panel" aria-labelledby="checklist-heading">
+            <div class="panel-header">
+              <p class="eyebrow">Research process</p>
+              <h2 id="checklist-heading">Daily Checklist</h2>
+            </div>
+            <ul class="checklist" id="today-focus-list"></ul>
           </article>
         </div>
       </section>
 
+      <section class="content-section" id="markets" aria-labelledby="markets-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Global + Korea + Digital Assets macro market dashboard</p>
+            <h2 id="markets-heading">Macro Market Dashboard</h2>
+          </div>
+          <p class="section-note">Latest, daily and weekly changes stay blank until verified.</p>
+        </div>
+        <div class="market-dashboard" id="market-dashboard"></div>
+      </section>
+
+      <section class="content-section" aria-labelledby="asset-classes-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Rates, FX, Equities, Credit, Commodities</p>
+            <h2 id="asset-classes-heading">Asset Class Boards</h2>
+          </div>
+        </div>
+        <div class="asset-class-board" id="asset-class-board"></div>
+      </section>
+
+      <section class="content-section" id="stories" aria-labelledby="stories-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Exactly five slots</p>
+            <h2 id="stories-heading">Top 5 Macro Stories</h2>
+          </div>
+        </div>
+        <div class="top-stories-list" id="top-stories-list"></div>
+      </section>
+
+      <section class="content-section" id="charts" aria-labelledby="charts-heading">
+        <div class="section-heading with-actions">
+          <div>
+            <p class="eyebrow">Historical charts</p>
+            <h2 id="charts-heading">Cross-Asset Chartbook</h2>
+          </div>
+          <div class="range-selector" id="chart-range-selector" aria-label="Chart range selector"></div>
+        </div>
+        <div class="charts-grid" id="charts-grid"></div>
+      </section>
+
       <section class="content-section" id="calendar" aria-labelledby="calendar-heading">
         <div class="section-heading">
-          <p class="eyebrow">Macro Calendar</p>
-          <h2 id="calendar-heading">Upcoming Events Watchlist</h2>
+          <div>
+            <p class="eyebrow">Macro calendar</p>
+            <h2 id="calendar-heading">Event Risk Calendar</h2>
+          </div>
         </div>
         <div class="table-wrap">
           <table>
@@ -121,14 +129,59 @@
                 <th>Time</th>
                 <th>Region</th>
                 <th>Event</th>
-                <th>Importance</th>
+                <th>Status</th>
                 <th>Actual</th>
                 <th>Consensus</th>
                 <th>Previous</th>
+                <th>Surprise</th>
+                <th>Why It Matters</th>
+                <th>Markets</th>
+                <th>Source</th>
               </tr>
             </thead>
             <tbody id="calendar-body"></tbody>
           </table>
+        </div>
+      </section>
+
+      <section class="content-section" id="positioning" aria-labelledby="positioning-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Positioning / Flows / Market Pricing</p>
+            <h2 id="positioning-heading">Hard Data vs Market Inference</h2>
+          </div>
+        </div>
+        <div class="positioning-grid" id="positioning-grid"></div>
+      </section>
+
+      <section class="content-section" id="digital-assets" aria-labelledby="digital-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">BTC, ETH, crypto market indicators</p>
+            <h2 id="digital-heading">Digital Assets Macro Lens</h2>
+          </div>
+        </div>
+        <div class="digital-layout">
+          <article class="panel crypto-signal" id="crypto-signal-card"></article>
+          <div class="digital-core" id="digital-core"></div>
+          <div class="digital-optional" id="digital-optional"></div>
+        </div>
+      </section>
+
+      <section class="content-section" id="briefings" aria-labelledby="briefings-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Daily Briefings archive</p>
+            <h2 id="briefings-heading">Research Archive</h2>
+          </div>
+        </div>
+        <div class="archive-layout">
+          <div class="archive-list" id="archive-list"></div>
+          <article class="briefing-view" id="briefing-view" aria-live="polite">
+            <p class="eyebrow">Selected briefing</p>
+            <h3>Choose a briefing</h3>
+            <p>Select an archive item to load its daily JSON note.</p>
+          </article>
         </div>
       </section>
 
@@ -148,9 +201,12 @@
 
       <section class="content-section" id="methodology" aria-labelledby="methodology-heading">
         <div class="section-heading">
-          <p class="eyebrow">Methodology / source hierarchy</p>
-          <h2 id="methodology-heading">Source Discipline</h2>
+          <div>
+            <p class="eyebrow">Methodology / source hierarchy</p>
+            <h2 id="methodology-heading">Source Discipline</h2>
+          </div>
         </div>
+        <div class="method-rule" id="methodology-rule"></div>
         <div class="methodology-grid" id="methodology-grid"></div>
       </section>
     </main>
@@ -159,7 +215,5 @@
       <p>Personal research journal. Market data must be verified before publication.</p>
       <a href="#top">Back to top</a>
     </footer>
-
-    <script src="app.js" defer></script>
   </body>
 </html>

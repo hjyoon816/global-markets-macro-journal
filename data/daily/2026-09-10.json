@@ -1,0 +1,159 @@
+{
+  "date": "2026-09-10",
+  "title": "Phase 2 Macro Terminal Template",
+  "summary": "A placeholder-first daily briefing template for Global Markets, Korea macro, FICC, commodities, and digital assets. Unverified market values remain —.",
+  "executiveSummary": [
+    "—"
+  ],
+  "dashboardSignals": [
+    {
+      "title": "Oil and yields",
+      "observation": "—",
+      "interpretation": "—",
+      "confidence": "—",
+      "relatedAssets": ["Brent", "UST 10Y", "S&P 500"]
+    },
+    {
+      "title": "USD and KRW",
+      "observation": "—",
+      "interpretation": "—",
+      "confidence": "—",
+      "relatedAssets": ["DXY", "USD/KRW", "KOSPI"]
+    },
+    {
+      "title": "Equity breadth and volatility",
+      "observation": "—",
+      "interpretation": "—",
+      "confidence": "—",
+      "relatedAssets": ["S&P 500", "Nasdaq 100", "VIX"]
+    },
+    {
+      "title": "Crypto and liquidity",
+      "observation": "—",
+      "interpretation": "—",
+      "confidence": "—",
+      "relatedAssets": ["BTC/USD", "ETH/USD", "US real yields"]
+    }
+  ],
+  "topMacroStories": [
+    {
+      "rank": 1,
+      "headline": "—",
+      "category": "—",
+      "summary": "—",
+      "whyTop5": "—",
+      "causalChain": ["—"],
+      "assetImpact": {
+        "rates": "—",
+        "fx": "—",
+        "equities": "—",
+        "credit": "—",
+        "commodities": "—",
+        "digitalAssets": "—"
+      },
+      "learningTakeaway": "—",
+      "imageUrl": "—",
+      "sources": [{ "name": "—", "url": "—", "type": "primary" }]
+    },
+    {
+      "rank": 2,
+      "headline": "—",
+      "category": "—",
+      "summary": "—",
+      "whyTop5": "—",
+      "causalChain": ["—"],
+      "assetImpact": {
+        "rates": "—",
+        "fx": "—",
+        "equities": "—",
+        "credit": "—",
+        "commodities": "—",
+        "digitalAssets": "—"
+      },
+      "learningTakeaway": "—",
+      "imageUrl": "—",
+      "sources": [{ "name": "—", "url": "—", "type": "primary" }]
+    },
+    {
+      "rank": 3,
+      "headline": "—",
+      "category": "—",
+      "summary": "—",
+      "whyTop5": "—",
+      "causalChain": ["—"],
+      "assetImpact": {
+        "rates": "—",
+        "fx": "—",
+        "equities": "—",
+        "credit": "—",
+        "commodities": "—",
+        "digitalAssets": "—"
+      },
+      "learningTakeaway": "—",
+      "imageUrl": "—",
+      "sources": [{ "name": "—", "url": "—", "type": "primary" }]
+    },
+    {
+      "rank": 4,
+      "headline": "—",
+      "category": "—",
+      "summary": "—",
+      "whyTop5": "—",
+      "causalChain": ["—"],
+      "assetImpact": {
+        "rates": "—",
+        "fx": "—",
+        "equities": "—",
+        "credit": "—",
+        "commodities": "—",
+        "digitalAssets": "—"
+      },
+      "learningTakeaway": "—",
+      "imageUrl": "—",
+      "sources": [{ "name": "—", "url": "—", "type": "primary" }]
+    },
+    {
+      "rank": 5,
+      "headline": "—",
+      "category": "—",
+      "summary": "—",
+      "whyTop5": "—",
+      "causalChain": ["—"],
+      "assetImpact": {
+        "rates": "—",
+        "fx": "—",
+        "equities": "—",
+        "credit": "—",
+        "commodities": "—",
+        "digitalAssets": "—"
+      },
+      "learningTakeaway": "—",
+      "imageUrl": "—",
+      "sources": [{ "name": "—", "url": "—", "type": "primary" }]
+    }
+  ],
+  "marketDashboard": {
+    "summary": "—",
+    "instrumentIds": ["ust10y", "us2s10s", "dxy", "usdkrw", "spx", "kospi", "btcusd", "ethusd"]
+  },
+  "digitalAssets": {
+    "classification": "—",
+    "summary": "—",
+    "macroDrivers": [],
+    "cryptoSpecificDrivers": []
+  },
+  "macroCalendar": [],
+  "positioningFlows": {
+    "hardData": [],
+    "marketInference": []
+  },
+  "crossAssetNarrative": "—",
+  "conceptsLearned": [],
+  "whatToWatchTomorrow": ["—"],
+  "scenarios": {
+    "bull": "—",
+    "base": "—",
+    "bear": "—"
+  },
+  "sources": [{ "name": "—", "url": "—", "type": "primary" }]
+}

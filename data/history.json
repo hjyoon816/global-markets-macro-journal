@@ -1,0 +1,173 @@
+{
+  "asOf": "2026-09-10T00:00:00+09:00",
+  "ranges": ["1M", "3M", "6M", "1Y"],
+  "chartPanels": [
+    {
+      "id": "ust2y-ust10y",
+      "title": "UST 2Y vs 10Y",
+      "kicker": "Rates",
+      "description": "Front-end versus benchmark duration.",
+      "seriesIds": ["ust2y", "ust10y"],
+      "transform": "level"
+    },
+    {
+      "id": "us2s10s-curve",
+      "title": "US 2s10s Curve",
+      "kicker": "Rates",
+      "description": "Treasury curve slope in basis points.",
+      "seriesIds": ["us2s10s"],
+      "transform": "level"
+    },
+    {
+      "id": "dxy-usdkrw",
+      "title": "DXY vs USD/KRW",
+      "kicker": "FX",
+      "description": "Dollar index and Korea FX pressure proxy.",
+      "seriesIds": ["dxy", "usdkrw"],
+      "transform": "level"
+    },
+    {
+      "id": "equity-normalized",
+      "title": "S&P 500 vs Nasdaq 100 vs KOSPI",
+      "kicker": "Equities",
+      "description": "Index performance normalized to 100 once data are populated.",
+      "seriesIds": ["spx", "ndx", "kospi"],
+      "transform": "normalized100"
+    },
+    {
+      "id": "vix-move",
+      "title": "VIX vs MOVE",
+      "kicker": "Volatility",
+      "description": "Equity and rates implied volatility gauges.",
+      "seriesIds": ["vix", "move"],
+      "transform": "level"
+    },
+    {
+      "id": "commodities-normalized",
+      "title": "Brent vs Gold vs Copper",
+      "kicker": "Commodities",
+      "description": "Commodity performance normalized to 100 once data are populated.",
+      "seriesIds": ["brent", "gold", "copper"],
+      "transform": "normalized100"
+    }
+  ],
+  "series": [
+    {
+      "id": "ust2y",
+      "name": "US Treasury 2Y",
+      "unit": "%",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": [{ "date": "2026-09-10", "value": null }]
+    },
+    {
+      "id": "ust10y",
+      "name": "US Treasury 10Y",
+      "unit": "%",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": [{ "date": "2026-09-10", "value": null }]
+    },
+    {
+      "id": "us2s10s",
+      "name": "US 2s10s",
+      "unit": "bp",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": [{ "date": "2026-09-10", "value": null }]
+    },
+    {
+      "id": "dxy",
+      "name": "DXY",
+      "unit": "index",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": [{ "date": "2026-09-10", "value": null }]
+    },
+    {
+      "id": "usdkrw",
+      "name": "USD/KRW",
+      "unit": "KRW",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": [{ "date": "2026-09-10", "value": null }]
+    },
+    {
+      "id": "spx",
+      "name": "S&P 500",
+      "unit": "index",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": [{ "date": "2026-09-10", "value": null }]
+    },
+    {
+      "id": "ndx",
+      "name": "Nasdaq 100",
+      "unit": "index",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": [{ "date": "2026-09-10", "value": null }]
+    },
+    {
+      "id": "kospi",
+      "name": "KOSPI",
+      "unit": "index",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": [{ "date": "2026-09-10", "value": null }]
+    },
+    {
+      "id": "vix",
+      "name": "VIX",
+      "unit": "index",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": [{ "date": "2026-09-10", "value": null }]
+    },
+    {
+      "id": "move",
+      "name": "MOVE",
+      "unit": "index",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": [{ "date": "2026-09-10", "value": null }]
+    },
+    {
+      "id": "brent",
+      "name": "Brent",
+      "unit": "USD/bbl",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": [{ "date": "2026-09-10", "value": null }]
+    },
+    {
+      "id": "gold",
+      "name": "Gold",
+      "unit": "USD/oz",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": [{ "date": "2026-09-10", "value": null }]
+    },
+    {
+      "id": "copper",
+      "name": "Copper",
+      "unit": "USD/lb",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": [{ "date": "2026-09-10", "value": null }]
+    }
+  ]
+}
