@@ -17,6 +17,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 
 PLACEHOLDER = "—"
@@ -137,12 +138,32 @@ def is_missing(value: Any) -> bool:
     return False
 
 
+def clean_value(value: Any) -> Any:
+    return value.strip() if isinstance(value, str) else value
+
+
+def is_absolute_http_url(value: Any) -> bool:
+    if is_missing(value) or not isinstance(value, str):
+        return False
+
+    try:
+        parsed = urlparse(value.strip())
+    except ValueError:
+        return False
+
+    return parsed.scheme in {"http", "https"} and bool(parsed.netloc)
+
+
 def index_instruments(data: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return {instrument["id"]: instrument for instrument in data.get("instruments", [])}
 
 
 def has_required_provenance(update: InstrumentUpdate) -> bool:
-    return all(not is_missing(update.fields.get(field_name)) for field_name in REQUIRED_PROVENANCE_FIELDS)
+    has_required_fields = all(
+        not is_missing(update.fields.get(field_name))
+        for field_name in REQUIRED_PROVENANCE_FIELDS
+    )
+    return has_required_fields and is_absolute_http_url(update.fields.get("sourceUrl"))
 
 
 def has_publishable_value(update: InstrumentUpdate) -> bool:
@@ -187,7 +208,7 @@ def apply_updates(data: dict[str, Any], updates: list[InstrumentUpdate]) -> int:
 
         if not has_required_provenance(update):
             LOGGER.warning(
-                "Skipping verified update for %s from %s because timestamp, sourceName, and sourceUrl are required",
+                "Skipping verified update for %s from %s because timestamp, sourceName, and absolute http(s) sourceUrl are required",
                 update.instrument_id,
                 update.provider_name,
             )
@@ -206,7 +227,8 @@ def apply_updates(data: dict[str, Any], updates: list[InstrumentUpdate]) -> int:
             LOGGER.warning("Ignoring update for unknown instrument id %s", update.instrument_id)
             continue
 
-        for field_name, incoming in update.fields.items():
+        for field_name, raw_incoming in update.fields.items():
+            incoming = clean_value(raw_incoming)
             if field_name not in allowed_fields:
                 LOGGER.warning("Ignoring unsupported field %s for %s", field_name, update.instrument_id)
                 continue
@@ -244,7 +266,7 @@ def history_update_has_provenance(update: HistoryUpdate) -> bool:
     return all(
         not is_missing(value)
         for value in (update.timestamp, update.source_name, update.source_url)
-    )
+    ) and is_absolute_http_url(update.source_url)
 
 
 def valid_history_date(value: str) -> bool:
@@ -291,7 +313,7 @@ def apply_history_updates(history: dict[str, Any], updates: list[HistoryUpdate])
 
         if not history_update_has_provenance(update):
             LOGGER.warning(
-                "Skipping history update for %s from %s because timestamp, sourceName, and sourceUrl are required",
+                "Skipping history update for %s from %s because timestamp, sourceName, and absolute http(s) sourceUrl are required",
                 update.series_id,
                 update.provider_name,
             )
@@ -304,11 +326,11 @@ def apply_history_updates(history: dict[str, Any], updates: list[HistoryUpdate])
 
         points = series.setdefault("points", [])
         replacement = {
-            "date": update.date,
+            "date": clean_value(update.date),
             "value": update.value,
-            "timestamp": update.timestamp,
-            "sourceName": update.source_name,
-            "sourceUrl": update.source_url,
+            "timestamp": clean_value(update.timestamp),
+            "sourceName": clean_value(update.source_name),
+            "sourceUrl": clean_value(update.source_url),
             "verified": True,
         }
 
