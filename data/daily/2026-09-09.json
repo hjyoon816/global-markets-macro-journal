@@ -1,0 +1,47 @@
+{
+  "date": "2026-09-09",
+  "title": "Initial Journal Template",
+  "summary": "A starter daily briefing template for Global Markets, Korea macro, FICC, commodities, and digital assets. Unverified market values remain —.",
+  "sections": [
+    {
+      "title": "Executive Snapshot",
+      "points": [
+        "Risk tone: —",
+        "Primary cross-asset driver: —",
+        "Data or event focus: —"
+      ]
+    },
+    {
+      "title": "Rates and FX",
+      "points": [
+        "Global rates move: —",
+        "USD direction and drivers: —",
+        "KRW context: —"
+      ]
+    },
+    {
+      "title": "Equities, Credit, Commodities",
+      "points": [
+        "Equity leadership and breadth: —",
+        "Credit spread tone and issuance: —",
+        "Commodity inflation signal: —"
+      ]
+    },
+    {
+      "title": "Digital Assets",
+      "points": [
+        "BTC / ETH price action: —",
+        "Crypto liquidity and derivatives signal: —",
+        "Regulatory, ETF, custody, or infrastructure headlines: —"
+      ]
+    },
+    {
+      "title": "Forward Calendar",
+      "points": [
+        "High-impact macro events: —",
+        "Central bank communication: —",
+        "Korea-specific watch items: —"
+      ]
+    }
+  ]
+}

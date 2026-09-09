@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Personal Global Markets, Macro, and FICC research journal covering rates, FX, equities, credit, commodities, Korea markets, and digital assets."
+    />
+    <title>Global Markets Macro Journal</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header" id="top">
+      <a class="brand" href="#today" aria-label="Global Markets Macro Journal home">
+        <span class="brand-mark" aria-hidden="true">GM</span>
+        <span>
+          <span class="brand-title">Global Markets Macro Journal</span>
+          <span class="brand-subtitle">FICC research notebook</span>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#today">Today</a>
+        <a href="#markets">Markets</a>
+        <a href="#digital-assets">Digital Assets</a>
+        <a href="#briefings">Briefings</a>
+        <a href="#calendar">Calendar</a>
+        <a href="#learn">Learn</a>
+        <a href="#methodology">Methodology</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="today-grid section-band" id="today" aria-labelledby="today-heading">
+        <div class="hero-panel">
+          <p class="eyebrow">Today dashboard</p>
+          <h1 id="today-heading">Global Markets Macro Journal</h1>
+          <p class="lead">
+            A disciplined daily workspace for Global Macro, FICC, Korea markets,
+            and digital asset observations.
+          </p>
+          <div class="status-row" aria-label="Dashboard data status">
+            <span class="status-pill neutral">Template build</span>
+            <span class="status-pill">Unverified values shown as —</span>
+            <span class="status-pill" id="as-of-pill">As of —</span>
+          </div>
+        </div>
+
+        <aside class="daily-brief" aria-labelledby="daily-brief-heading">
+          <div class="section-heading compact">
+            <p class="eyebrow">Daily pulse</p>
+            <h2 id="daily-brief-heading">Research Checklist</h2>
+          </div>
+          <ul class="checklist" id="today-focus-list"></ul>
+        </aside>
+      </section>
+
+      <section class="content-section" aria-labelledby="cross-asset-heading">
+        <div class="section-heading">
+          <p class="eyebrow">Cross-asset lens</p>
+          <h2 id="cross-asset-heading">Market Regime Map</h2>
+        </div>
+        <div class="regime-map" id="regime-map" aria-label="Market regime map"></div>
+      </section>
+
+      <section class="content-section" id="markets" aria-labelledby="markets-heading">
+        <div class="section-heading">
+          <p class="eyebrow">Global + Korea market dashboard</p>
+          <h2 id="markets-heading">Macro Monitors</h2>
+        </div>
+        <div class="region-grid" id="region-grid"></div>
+      </section>
+
+      <section class="content-section" aria-labelledby="asset-classes-heading">
+        <div class="section-heading">
+          <p class="eyebrow">Rates, FX, Equities, Credit, Commodities</p>
+          <h2 id="asset-classes-heading">Asset Class Boards</h2>
+        </div>
+        <div class="asset-board" id="asset-board"></div>
+      </section>
+
+      <section class="content-section" id="digital-assets" aria-labelledby="digital-heading">
+        <div class="section-heading">
+          <p class="eyebrow">BTC, ETH, crypto market indicators</p>
+          <h2 id="digital-heading">Digital Assets</h2>
+        </div>
+        <div class="digital-layout">
+          <div class="metric-grid" id="digital-metrics"></div>
+          <div class="watch-panel">
+            <h3>Crypto Watch Framework</h3>
+            <ul id="digital-watch-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section" id="briefings" aria-labelledby="briefings-heading">
+        <div class="section-heading">
+          <p class="eyebrow">Daily Briefings archive</p>
+          <h2 id="briefings-heading">Research Archive</h2>
+        </div>
+        <div class="archive-layout">
+          <div class="archive-list" id="archive-list"></div>
+          <article class="briefing-view" id="briefing-view" aria-live="polite">
+            <p class="eyebrow">Selected briefing</p>
+            <h3>Choose a briefing</h3>
+            <p>Select an archive item to load its daily JSON note.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-section" id="calendar" aria-labelledby="calendar-heading">
+        <div class="section-heading">
+          <p class="eyebrow">Macro Calendar</p>
+          <h2 id="calendar-heading">Upcoming Events Watchlist</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Region</th>
+                <th>Event</th>
+                <th>Importance</th>
+                <th>Actual</th>
+                <th>Consensus</th>
+                <th>Previous</th>
+              </tr>
+            </thead>
+            <tbody id="calendar-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="content-section" id="learn" aria-labelledby="learn-heading">
+        <div class="section-heading with-actions">
+          <div>
+            <p class="eyebrow">Learn / FICC glossary</p>
+            <h2 id="learn-heading">FICC Glossary</h2>
+          </div>
+          <label class="search-box">
+            <span class="sr-only">Search glossary</span>
+            <input id="glossary-search" type="search" placeholder="Search terms" />
+          </label>
+        </div>
+        <div class="glossary-grid" id="glossary-grid"></div>
+      </section>
+
+      <section class="content-section" id="methodology" aria-labelledby="methodology-heading">
+        <div class="section-heading">
+          <p class="eyebrow">Methodology / source hierarchy</p>
+          <h2 id="methodology-heading">Source Discipline</h2>
+        </div>
+        <div class="methodology-grid" id="methodology-grid"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Personal research journal. Market data must be verified before publication.</p>
+      <a href="#top">Back to top</a>
+    </footer>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

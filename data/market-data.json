@@ -1,0 +1,455 @@
+{
+  "asOf": "2026-09-09",
+  "status": "Initial template build",
+  "dataPolicy": "Do not publish market values unless they are verified. Use — for unverified values.",
+  "today": {
+    "session": "Global handoff",
+    "focus": [
+      "Verify primary market levels before writing commentary.",
+      "Separate observed facts from interpretation and forward-looking views.",
+      "Track Korea market moves against global rates, FX, risk, and liquidity context.",
+      "Flag data gaps explicitly and keep unverified values as —.",
+      "Capture digital asset signals alongside traditional macro risk indicators."
+    ]
+  },
+  "regimeMap": [
+    {
+      "label": "Growth",
+      "value": "—"
+    },
+    {
+      "label": "Inflation",
+      "value": "—"
+    },
+    {
+      "label": "Policy",
+      "value": "—"
+    },
+    {
+      "label": "Liquidity",
+      "value": "—"
+    },
+    {
+      "label": "Risk Appetite",
+      "value": "—"
+    },
+    {
+      "label": "USD Trend",
+      "value": "—"
+    },
+    {
+      "label": "Korea Macro",
+      "value": "—"
+    },
+    {
+      "label": "Crypto Beta",
+      "value": "—"
+    }
+  ],
+  "regionalDashboards": [
+    {
+      "id": "global",
+      "kicker": "Global dashboard",
+      "title": "Global Macro Snapshot",
+      "description": "Top-down monitor for the broad cross-asset backdrop.",
+      "tiles": [
+        {
+          "label": "US real yield impulse",
+          "value": "—",
+          "note": "Use verified Treasury and inflation market data."
+        },
+        {
+          "label": "Global equity breadth",
+          "value": "—",
+          "note": "Track major index participation and leadership."
+        },
+        {
+          "label": "Credit risk tone",
+          "value": "—",
+          "note": "Compare IG/HY spreads, CDS, and primary issuance."
+        },
+        {
+          "label": "Commodity inflation pulse",
+          "value": "—",
+          "note": "Review energy, metals, and agricultural price signals."
+        }
+      ]
+    },
+    {
+      "id": "korea",
+      "kicker": "Korea dashboard",
+      "title": "Korea Market Snapshot",
+      "description": "KRW, KTB, KOSPI, credit, and external liquidity watch.",
+      "tiles": [
+        {
+          "label": "USD/KRW",
+          "value": "—",
+          "note": "Verify spot and fixing source before publication."
+        },
+        {
+          "label": "KTB curve",
+          "value": "—",
+          "note": "Monitor 3Y, 10Y, curve shape, and auction calendar."
+        },
+        {
+          "label": "KOSPI / KOSDAQ tone",
+          "value": "—",
+          "note": "Separate index levels from sector leadership notes."
+        },
+        {
+          "label": "Foreign flow signal",
+          "value": "—",
+          "note": "Track equity and bond flow context from verified sources."
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "rates",
+      "title": "Rates",
+      "description": "Policy, curves, duration, breakevens.",
+      "instruments": [
+        {
+          "name": "Fed funds target",
+          "value": "—",
+          "note": "Federal Reserve target range."
+        },
+        {
+          "name": "US 2Y",
+          "value": "—",
+          "note": "Front-end Treasury yield."
+        },
+        {
+          "name": "US 10Y",
+          "value": "—",
+          "note": "Benchmark Treasury yield."
+        },
+        {
+          "name": "KTB 3Y",
+          "value": "—",
+          "note": "Korea Treasury Bond 3-year yield."
+        },
+        {
+          "name": "KTB 10Y",
+          "value": "—",
+          "note": "Korea Treasury Bond 10-year yield."
+        }
+      ]
+    },
+    {
+      "id": "fx",
+      "title": "FX",
+      "description": "Dollar, KRW, JPY, CNH, carry.",
+      "instruments": [
+        {
+          "name": "DXY",
+          "value": "—",
+          "note": "US Dollar Index."
+        },
+        {
+          "name": "EUR/USD",
+          "value": "—",
+          "note": "Euro versus US dollar."
+        },
+        {
+          "name": "USD/JPY",
+          "value": "—",
+          "note": "US dollar versus Japanese yen."
+        },
+        {
+          "name": "USD/KRW",
+          "value": "—",
+          "note": "US dollar versus Korean won."
+        },
+        {
+          "name": "USD/CNH",
+          "value": "—",
+          "note": "Offshore renminbi."
+        }
+      ]
+    },
+    {
+      "id": "equities",
+      "title": "Equities",
+      "description": "Index levels, breadth, factors.",
+      "instruments": [
+        {
+          "name": "S&P 500",
+          "value": "—",
+          "note": "US large-cap benchmark."
+        },
+        {
+          "name": "Nasdaq 100",
+          "value": "—",
+          "note": "US growth and technology benchmark."
+        },
+        {
+          "name": "Euro Stoxx 50",
+          "value": "—",
+          "note": "Euro area blue-chip benchmark."
+        },
+        {
+          "name": "KOSPI",
+          "value": "—",
+          "note": "Korea Composite Stock Price Index."
+        },
+        {
+          "name": "MSCI EM",
+          "value": "—",
+          "note": "Emerging markets equity benchmark."
+        }
+      ]
+    },
+    {
+      "id": "credit",
+      "title": "Credit",
+      "description": "Spreads, funding, issuance.",
+      "instruments": [
+        {
+          "name": "US IG spread",
+          "value": "—",
+          "note": "Investment grade spread proxy."
+        },
+        {
+          "name": "US HY spread",
+          "value": "—",
+          "note": "High yield spread proxy."
+        },
+        {
+          "name": "CDX IG",
+          "value": "—",
+          "note": "North America investment grade CDS index."
+        },
+        {
+          "name": "CDX HY",
+          "value": "—",
+          "note": "North America high yield CDS index."
+        },
+        {
+          "name": "Korea credit spread",
+          "value": "—",
+          "note": "Local credit spread placeholder."
+        }
+      ]
+    },
+    {
+      "id": "commodities",
+      "title": "Commodities",
+      "description": "Energy, metals, macro supply shocks.",
+      "instruments": [
+        {
+          "name": "Brent crude",
+          "value": "—",
+          "note": "Global crude oil benchmark."
+        },
+        {
+          "name": "WTI crude",
+          "value": "—",
+          "note": "US crude oil benchmark."
+        },
+        {
+          "name": "Gold",
+          "value": "—",
+          "note": "Precious metal and real-rate hedge monitor."
+        },
+        {
+          "name": "Copper",
+          "value": "—",
+          "note": "Cyclical industrial metal monitor."
+        },
+        {
+          "name": "LNG / gas",
+          "value": "—",
+          "note": "Energy import and inflation sensitivity monitor."
+        }
+      ]
+    }
+  ],
+  "digitalAssets": {
+    "indicators": [
+      {
+        "label": "BTC spot",
+        "value": "—",
+        "note": "Verify exchange composite or trusted index."
+      },
+      {
+        "label": "ETH spot",
+        "value": "—",
+        "note": "Verify exchange composite or trusted index."
+      },
+      {
+        "label": "BTC dominance",
+        "value": "—",
+        "note": "Market share of BTC within crypto assets."
+      },
+      {
+        "label": "Total crypto market cap",
+        "value": "—",
+        "note": "Use a named provider and timestamp."
+      },
+      {
+        "label": "Stablecoin supply",
+        "value": "—",
+        "note": "Liquidity proxy, verify source methodology."
+      },
+      {
+        "label": "Crypto vol / funding",
+        "value": "—",
+        "note": "Track derivatives positioning and leverage."
+      }
+    ],
+    "watchFramework": [
+      "Map BTC and ETH to global liquidity, real yields, USD, and equity beta.",
+      "Separate spot ETF or flow observations from price interpretation.",
+      "Note exchange, custody, regulatory, and stablecoin headlines only from primary or reputable sources.",
+      "Record the exact provider and timestamp for any crypto metric used in a briefing."
+    ]
+  },
+  "calendar": [
+    {
+      "date": "—",
+      "time": "—",
+      "region": "US",
+      "event": "Inflation release",
+      "importance": "High",
+      "actual": "—",
+      "consensus": "—",
+      "previous": "—"
+    },
+    {
+      "date": "—",
+      "time": "—",
+      "region": "Korea",
+      "event": "Bank of Korea decision",
+      "importance": "High",
+      "actual": "—",
+      "consensus": "—",
+      "previous": "—"
+    },
+    {
+      "date": "—",
+      "time": "—",
+      "region": "Euro Area",
+      "event": "ECB policy communication",
+      "importance": "Medium",
+      "actual": "—",
+      "consensus": "—",
+      "previous": "—"
+    },
+    {
+      "date": "—",
+      "time": "—",
+      "region": "China",
+      "event": "Activity data",
+      "importance": "Medium",
+      "actual": "—",
+      "consensus": "—",
+      "previous": "—"
+    },
+    {
+      "date": "—",
+      "time": "—",
+      "region": "Global",
+      "event": "Major central bank speaker",
+      "importance": "Medium",
+      "actual": "—",
+      "consensus": "—",
+      "previous": "—"
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Duration",
+      "assetClass": "Rates",
+      "definition": "A measure of a bond price's sensitivity to changes in interest rates."
+    },
+    {
+      "term": "Curve steepening",
+      "assetClass": "Rates",
+      "definition": "A move where longer-dated yields rise relative to shorter-dated yields, or shorter-dated yields fall relative to longer-dated yields."
+    },
+    {
+      "term": "Breakeven inflation",
+      "assetClass": "Rates",
+      "definition": "The market-implied inflation rate derived from nominal Treasury yields and inflation-linked bond yields."
+    },
+    {
+      "term": "Carry",
+      "assetClass": "FX",
+      "definition": "The expected return from holding a position if spot prices and yield curves are unchanged."
+    },
+    {
+      "term": "Cross-currency basis",
+      "assetClass": "FX",
+      "definition": "The spread embedded in swapping funding between two currencies, often used as a stress and funding indicator."
+    },
+    {
+      "term": "Credit spread",
+      "assetClass": "Credit",
+      "definition": "The extra yield a borrower pays over a comparable low-risk benchmark to compensate investors for credit and liquidity risk."
+    },
+    {
+      "term": "CDS",
+      "assetClass": "Credit",
+      "definition": "A credit default swap, a derivative used to transfer or hedge default risk."
+    },
+    {
+      "term": "Risk parity",
+      "assetClass": "Portfolio",
+      "definition": "A portfolio approach that allocates risk more evenly across asset classes rather than allocating capital evenly."
+    },
+    {
+      "term": "Term premium",
+      "assetClass": "Rates",
+      "definition": "Compensation investors may require for holding longer-maturity bonds instead of rolling short-term debt."
+    },
+    {
+      "term": "Funding rate",
+      "assetClass": "Digital Assets",
+      "definition": "A recurring payment between perpetual futures longs and shorts that helps keep futures prices close to spot."
+    },
+    {
+      "term": "Stablecoin",
+      "assetClass": "Digital Assets",
+      "definition": "A crypto token designed to maintain a stable value against a reference asset such as the US dollar."
+    },
+    {
+      "term": "On-chain flow",
+      "assetClass": "Digital Assets",
+      "definition": "Observable blockchain transaction activity used as one input in digital asset market analysis."
+    }
+  ],
+  "sourceHierarchy": [
+    {
+      "rank": 1,
+      "name": "Primary official sources",
+      "useFor": "Policy rates, macro statistics, official calendars, auction details, and regulatory notices.",
+      "examples": ["central banks", "statistics agencies", "finance ministries"]
+    },
+    {
+      "rank": 2,
+      "name": "Exchange and issuer sources",
+      "useFor": "Listed market prices, index notices, exchange trading data, and official company or issuer releases.",
+      "examples": ["exchanges", "index providers", "issuer filings"]
+    },
+    {
+      "rank": 3,
+      "name": "Established market data vendors",
+      "useFor": "Real-time levels, histories, calculated spreads, and cross-asset dashboards.",
+      "examples": ["Bloomberg", "LSEG", "FactSet"]
+    },
+    {
+      "rank": 4,
+      "name": "Reputable financial media",
+      "useFor": "Narrative context, reported policy commentary, and market color after facts are confirmed.",
+      "examples": ["Reuters", "Financial Times", "Wall Street Journal"]
+    },
+    {
+      "rank": 5,
+      "name": "Specialist research and crypto providers",
+      "useFor": "Supplementary analytics with explicit provider, timestamp, and methodology notes.",
+      "examples": ["sell-side research", "on-chain analytics", "ETF flow trackers"]
+    }
+  ]
+}

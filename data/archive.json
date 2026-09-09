@@ -1,0 +1,13 @@
+{
+  "generated": "2026-09-09",
+  "items": [
+    {
+      "date": "2026-09-09",
+      "title": "Initial Journal Template",
+      "path": "data/daily/2026-09-09.json",
+      "regions": ["Global", "Korea"],
+      "summary": "Template briefing with unverified market values intentionally left as —.",
+      "tags": ["template", "global macro", "FICC", "digital assets"]
+    }
+  ]
+}
