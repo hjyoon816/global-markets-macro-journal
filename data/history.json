@@ -53,13 +53,22 @@
   ],
   "series": [
     {
+      "id": "fed_target_range",
+      "name": "Effective Fed Funds Rate (DFF proxy)",
+      "unit": "%",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
+    },
+    {
       "id": "ust2y",
       "name": "US Treasury 2Y",
       "unit": "%",
       "frequency": "daily",
       "sourceName": "—",
       "sourceUrl": "—",
-      "points": [{ "date": "2026-09-10", "value": null }]
+      "points": []
     },
     {
       "id": "ust10y",
@@ -68,7 +77,16 @@
       "frequency": "daily",
       "sourceName": "—",
       "sourceUrl": "—",
-      "points": [{ "date": "2026-09-10", "value": null }]
+      "points": []
+    },
+    {
+      "id": "ust30y",
+      "name": "US Treasury 30Y",
+      "unit": "%",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
     },
     {
       "id": "us2s10s",
@@ -77,7 +95,70 @@
       "frequency": "daily",
       "sourceName": "—",
       "sourceUrl": "—",
-      "points": [{ "date": "2026-09-10", "value": null }]
+      "points": []
+    },
+    {
+      "id": "us10y_real_yield",
+      "name": "US 10Y real yield",
+      "unit": "%",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
+    },
+    {
+      "id": "us10y_breakeven",
+      "name": "US 10Y breakeven inflation",
+      "unit": "%",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
+    },
+    {
+      "id": "bok_base_rate",
+      "name": "BOK base rate",
+      "unit": "%",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
+    },
+    {
+      "id": "ktb3y",
+      "name": "KTB 3Y",
+      "unit": "%",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
+    },
+    {
+      "id": "ktb10y",
+      "name": "KTB 10Y",
+      "unit": "%",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
+    },
+    {
+      "id": "korea3s10s",
+      "name": "Korea 3s10s",
+      "unit": "bp",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
+    },
+    {
+      "id": "kofr_cd91d",
+      "name": "CD 91D (KOFR slot)",
+      "unit": "%",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
     },
     {
       "id": "dxy",
@@ -86,7 +167,34 @@
       "frequency": "daily",
       "sourceName": "—",
       "sourceUrl": "—",
-      "points": [{ "date": "2026-09-10", "value": null }]
+      "points": []
+    },
+    {
+      "id": "eurusd",
+      "name": "EUR/USD",
+      "unit": "USD",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
+    },
+    {
+      "id": "usdjpy",
+      "name": "USD/JPY",
+      "unit": "JPY",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
+    },
+    {
+      "id": "usdcnh",
+      "name": "USD/CNH",
+      "unit": "CNH",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
     },
     {
       "id": "usdkrw",
@@ -95,7 +203,7 @@
       "frequency": "daily",
       "sourceName": "—",
       "sourceUrl": "—",
-      "points": [{ "date": "2026-09-10", "value": null }]
+      "points": []
     },
     {
       "id": "spx",
@@ -104,7 +212,7 @@
       "frequency": "daily",
       "sourceName": "—",
       "sourceUrl": "—",
-      "points": [{ "date": "2026-09-10", "value": null }]
+      "points": []
     },
     {
       "id": "ndx",
@@ -113,7 +221,7 @@
       "frequency": "daily",
       "sourceName": "—",
       "sourceUrl": "—",
-      "points": [{ "date": "2026-09-10", "value": null }]
+      "points": []
     },
     {
       "id": "kospi",
@@ -122,7 +230,7 @@
       "frequency": "daily",
       "sourceName": "—",
       "sourceUrl": "—",
-      "points": [{ "date": "2026-09-10", "value": null }]
+      "points": []
     },
     {
       "id": "vix",
@@ -131,7 +239,7 @@
       "frequency": "daily",
       "sourceName": "—",
       "sourceUrl": "—",
-      "points": [{ "date": "2026-09-10", "value": null }]
+      "points": []
     },
     {
       "id": "move",
@@ -140,7 +248,7 @@
       "frequency": "daily",
       "sourceName": "—",
       "sourceUrl": "—",
-      "points": [{ "date": "2026-09-10", "value": null }]
+      "points": []
     },
     {
       "id": "brent",
@@ -149,7 +257,16 @@
       "frequency": "daily",
       "sourceName": "—",
       "sourceUrl": "—",
-      "points": [{ "date": "2026-09-10", "value": null }]
+      "points": []
+    },
+    {
+      "id": "wti",
+      "name": "WTI",
+      "unit": "USD/bbl",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
     },
     {
       "id": "gold",
@@ -158,16 +275,52 @@
       "frequency": "daily",
       "sourceName": "—",
       "sourceUrl": "—",
-      "points": [{ "date": "2026-09-10", "value": null }]
+      "points": []
     },
     {
       "id": "copper",
       "name": "Copper",
-      "unit": "USD/lb",
+      "unit": "USD/metric ton",
+      "frequency": "monthly",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
+    },
+    {
+      "id": "btcusd",
+      "name": "BTC/USD",
+      "unit": "USD",
       "frequency": "daily",
       "sourceName": "—",
       "sourceUrl": "—",
-      "points": [{ "date": "2026-09-10", "value": null }]
+      "points": []
+    },
+    {
+      "id": "ethusd",
+      "name": "ETH/USD",
+      "unit": "USD",
+      "frequency": "daily",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
+    },
+    {
+      "id": "total_crypto_mcap",
+      "name": "Total crypto market cap",
+      "unit": "USD",
+      "frequency": "intraday",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
+    },
+    {
+      "id": "btc_dominance",
+      "name": "BTC dominance",
+      "unit": "%",
+      "frequency": "intraday",
+      "sourceName": "—",
+      "sourceUrl": "—",
+      "points": []
     }
   ]
 }

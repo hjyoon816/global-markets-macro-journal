@@ -5,8 +5,8 @@
     "status": "setup",
     "dataPolicy": "Do not publish market values unless they are verified. Use — for unverified values.",
     "notes": [
-      "Initial Phase 2 schema upgrade only.",
-      "All live market values remain placeholder-only until verified."
+      "Phase 3A adds live-capable provider adapters for selected instruments.",
+      "Missing or unverified market values remain placeholder-only until verified."
     ]
   },
   "today": {
@@ -128,7 +128,7 @@
   "instruments": [
     {
       "id": "fed_target_range",
-      "name": "Fed target range",
+      "name": "Effective Fed Funds Rate (DFF proxy)",
       "assetClass": "Rates",
       "region": "US",
       "unit": "%",
@@ -383,7 +383,7 @@
     },
     {
       "id": "kofr_cd91d",
-      "name": "KOFR or CD 91D",
+      "name": "CD 91D (KOFR slot)",
       "assetClass": "Rates",
       "region": "Korea",
       "unit": "%",
@@ -760,7 +760,7 @@
       "name": "Copper",
       "assetClass": "Commodities",
       "region": "Global",
-      "unit": "USD/lb",
+      "unit": "USD/metric ton",
       "latest": "—",
       "change1d": "—",
       "change1w": "—",

@@ -11,10 +11,14 @@ unverified market values must remain `—`.
 - `styles.css` - Responsive institutional dashboard styling.
 - `app.js` - Client-side rendering for the dashboard, archive, charts, calendar, glossary, and methodology.
 - `data/market-data.json` - Current dashboard schema and placeholder market instruments.
-- `data/history.json` - Historical chart schema with null placeholder observations.
+- `data/history.json` - Historical chart schema with verified numeric points only.
 - `data/archive.json` - Daily briefing archive index.
 - `data/daily/YYYY-MM-DD.json` - Individual daily briefing files.
-- `scripts/update_market_data.py` - Future provider-adapter data update pipeline.
+- `docs/data-sources.md` - Provider mappings, methodology, and live-capable coverage.
+- `scripts/provider_mappings.py` - Auditable provider/series registry.
+- `scripts/update_market_data.py` - Verified provider-adapter market data update pipeline.
+- `scripts/validate_market_data.py` - Local and CI market-data integrity checks.
+- `tests/test_market_data.py` - Mocked provider/update safety tests.
 - `.github/workflows/pages.yml` - GitHub Pages deployment workflow.
 - `.github/workflows/update-market-data.yml` - Scheduled market data refresh workflow.
 - `.nojekyll` - Ensures GitHub Pages serves static files directly.
@@ -56,8 +60,9 @@ Each instrument in `data/market-data.json` supports:
 }
 ```
 
-Historical series in `data/history.json` use numeric `value` fields when verified.
-Unknown observations should be stored as `null`, not zero.
+Historical series in `data/history.json` use numeric `value` fields only when
+verified. Unknown observations are omitted from history rather than stored as
+placeholder points or zero.
 
 ## Data Status Rules
 
@@ -84,26 +89,50 @@ Source hierarchy:
 4. Reputable financial media
 5. Specialist research / analytics
 
-## Market Data Pipeline
+## Phase 3A Live Market Data Setup
 
-The initial script is a safe adapter framework. It does not scrape restricted or
-proprietary sites and does not embed API keys.
+The market-data updater has live-capable adapters for FRED, BOK ECOS, Alpha
+Vantage, and CoinGecko. It does not scrape restricted/proprietary sites and does
+not embed API keys.
 
-Run a local dry run:
-
-```bash
-python scripts/update_market_data.py --dry-run
-```
-
-Optional future provider secrets:
+Required environment variables:
 
 - `FRED_API_KEY`
 - `BOK_ECOS_API_KEY`
 - `ALPHA_VANTAGE_API_KEY`
 - `COINGECKO_API_KEY`
 
+Run local dry runs:
+
+```bash
+python scripts/update_market_data.py --dry-run
+python scripts/update_market_data.py --provider fred --dry-run
+python scripts/update_market_data.py --provider bok --dry-run
+python scripts/update_market_data.py --provider alphavantage --dry-run
+python scripts/update_market_data.py --provider coingecko --dry-run
+python scripts/update_market_data.py --provider fred --dry-run --verbose
+```
+
 If secrets are missing, providers skip gracefully. If a provider fails, the
 pipeline logs the failure and preserves existing values.
+
+Run local validation:
+
+```bash
+python -m pip install pytest
+python -m json.tool data/market-data.json >/dev/null
+python -m json.tool data/history.json >/dev/null
+python scripts/validate_market_data.py
+python -m py_compile scripts/update_market_data.py scripts/provider_mappings.py scripts/validate_market_data.py
+python -m pytest tests/test_market_data.py
+node --check app.js
+```
+
+GitHub repository secrets should be configured with the same four names above.
+Do not commit `.env` files or secret values.
+
+See `docs/data-sources.md` for exact series IDs, history-upsert rules, provider
+priority, source-provenance requirements, and placeholder limitations.
 
 ## GitHub Actions
 
@@ -111,4 +140,11 @@ pipeline logs the failure and preserves existing values.
 `07:00 Asia/Seoul`, and can also be started with `workflow_dispatch`.
 
 The update workflow validates JSON and only commits when `data/market-data.json`
-or `data/history.json` changes. The Pages workflow then redeploys from `main`.
+or `data/history.json` changes. It always checks out `main` and pushes verified
+production data to `origin main`.
+
+The Pages workflow deploys for normal pushes to `main`, manual dispatches, and
+successful completion of the `Update market data` workflow. For workflow-run
+deployments it checks out latest `main`, so a scheduled data commit can redeploy
+even when GitHub's token recursion protections suppress a push-triggered Pages
+run.

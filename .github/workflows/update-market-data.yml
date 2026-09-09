@@ -51,6 +51,9 @@ jobs:
           python -m json.tool data/archive.json >/dev/null
           find data/daily -name '*.json' -print0 | xargs -0 -I{} python -m json.tool "{}" >/dev/null
 
+      - name: Validate market data integrity
+        run: python scripts/validate_market_data.py
+
       - name: Commit changed data
         run: |
           if git diff --quiet -- data/market-data.json data/history.json; then
