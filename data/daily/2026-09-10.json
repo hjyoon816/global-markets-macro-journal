@@ -150,10 +150,6 @@
   "crossAssetNarrative": "—",
   "conceptsLearned": [],
   "whatToWatchTomorrow": ["—"],
-  "scenarios": {
-    "bull": "—",
-    "base": "—",
-    "bear": "—"
-  },
+  "scenarios": null,
   "sources": [{ "name": "—", "url": "—", "type": "primary" }]
 }

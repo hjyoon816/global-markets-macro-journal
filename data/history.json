@@ -22,9 +22,9 @@
       "id": "dxy-usdkrw",
       "title": "DXY vs USD/KRW",
       "kicker": "FX",
-      "description": "Dollar index and Korea FX pressure proxy.",
+      "description": "Dollar index and Korea FX pressure proxy normalized to 100 once data are populated.",
       "seriesIds": ["dxy", "usdkrw"],
-      "transform": "level"
+      "transform": "normalized100"
     },
     {
       "id": "equity-normalized",
@@ -38,9 +38,9 @@
       "id": "vix-move",
       "title": "VIX vs MOVE",
       "kicker": "Volatility",
-      "description": "Equity and rates implied volatility gauges.",
+      "description": "Equity and rates implied volatility gauges normalized to 100 once data are populated.",
       "seriesIds": ["vix", "move"],
-      "transform": "level"
+      "transform": "normalized100"
     },
     {
       "id": "commodities-normalized",

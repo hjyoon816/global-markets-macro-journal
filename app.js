@@ -15,8 +15,8 @@ const byId = (id) => document.getElementById(id);
 const isPlaceholder = (value) =>
   value === undefined ||
   value === null ||
-  value === "" ||
-  value === PLACEHOLDER ||
+  (typeof value === "string" && value.trim() === "") ||
+  (typeof value === "string" && value.trim() === PLACEHOLDER) ||
   (Array.isArray(value) && value.length === 0);
 
 const text = (value) => (isPlaceholder(value) ? PLACEHOLDER : String(value));
@@ -41,7 +41,20 @@ const safeHref = (url) => {
   }
 
   try {
-    const parsed = new URL(String(url), window.location.href);
+    const parsed = new URL(String(url).trim(), window.location.href);
+    return parsed.protocol === "http:" || parsed.protocol === "https:" ? parsed.href : "";
+  } catch (error) {
+    return "";
+  }
+};
+
+const safeHttpUrl = (url) => {
+  if (isPlaceholder(url)) {
+    return "";
+  }
+
+  try {
+    const parsed = new URL(String(url).trim());
     return parsed.protocol === "http:" || parsed.protocol === "https:" ? parsed.href : "";
   } catch (error) {
     return "";
@@ -335,6 +348,8 @@ function normalizeTopStories(stories) {
 
 function storyCard(story) {
   const impact = story.assetImpact ?? {};
+  const headline = text(story.headline);
+  const imageUrl = safeHttpUrl(story.imageUrl);
   const sourceList = (story.sources ?? [])
     .map((source) => {
       const href = safeHref(source.url);
@@ -344,14 +359,30 @@ function storyCard(story) {
         : `<li>${escapeHtml(label)}</li>`;
     })
     .join("");
+  const imageHtml = imageUrl
+    ? `
+      <figure class="story-media">
+        <img
+          data-story-image
+          src="${escapeHtml(imageUrl)}"
+          alt="${escapeHtml(headline === PLACEHOLDER ? "Macro story image" : headline)}"
+          loading="lazy"
+          decoding="async"
+          referrerpolicy="no-referrer"
+          onerror="this.closest('.story-card')?.classList.remove('has-image'); this.closest('.story-media')?.remove();"
+        />
+      </figure>
+    `
+    : "";
 
   return `
-    <article class="story-card">
+    <article class="story-card${imageUrl ? " has-image" : ""}">
       <span class="story-rank">${escapeHtml(text(story.rank))}</span>
+      ${imageHtml}
       <div class="story-body">
         <div>
           <p class="eyebrow">${escapeHtml(text(story.category))}</p>
-          <h3>${escapeHtml(text(story.headline))}</h3>
+          <h3>${escapeHtml(headline)}</h3>
         </div>
         <div class="story-summary-grid">
           <div class="field-box"><strong>Summary</strong>${escapeHtml(text(story.summary))}</div>
@@ -376,8 +407,26 @@ function storyCard(story) {
   `;
 }
 
-function renderTopStories(stories) {
-  byId("top-stories-list").innerHTML = normalizeTopStories(stories).map(storyCard).join("");
+function bindStoryImageFallbacks(container) {
+  container.querySelectorAll("[data-story-image]").forEach((image) => {
+    image.addEventListener(
+      "error",
+      () => {
+        image.closest(".story-card")?.classList.remove("has-image");
+        image.closest(".story-media")?.remove();
+      },
+      { once: true },
+    );
+  });
+}
+
+function renderTopStories(stories, warning = "") {
+  const container = byId("top-stories-list");
+  const warningHtml = warning
+    ? `<div class="briefing-warning">${escapeHtml(warning)}</div>`
+    : "";
+  container.innerHTML = `${warningHtml}${normalizeTopStories(stories).map(storyCard).join("")}`;
+  bindStoryImageFallbacks(container);
 }
 
 function rangeCutoff(range, latestTime) {
@@ -867,6 +916,11 @@ function briefingScenariosSection(scenarios) {
     return "";
   }
 
+  const scenarioValues = [scenarios.bull, scenarios.base, scenarios.bear];
+  if (!scenarioValues.some((value) => !isPlaceholder(value))) {
+    return "";
+  }
+
   return `
     <section class="briefing-section">
       <h3>Bull / Base / Bear</h3>
@@ -920,7 +974,8 @@ function legacySections(sections) {
 }
 
 function renderBriefingView(briefing) {
-  byId("briefing-view").innerHTML = `
+  const view = byId("briefing-view");
+  view.innerHTML = `
     <p class="eyebrow">${escapeHtml(text(briefing.date))}</p>
     <h3>${escapeHtml(text(briefing.title))}</h3>
     <p>${escapeHtml(text(briefing.summary))}</p>
@@ -942,6 +997,7 @@ function renderBriefingView(briefing) {
     ${sourcesSection(briefing.sources)}
     ${legacySections(briefing.sections)}
   `;
+  bindStoryImageFallbacks(view);
 }
 
 function renderArchive(archive) {
@@ -1015,8 +1071,13 @@ async function init() {
     renderArchive(archive);
 
     const currentPath = marketData.today?.currentBriefingPath ?? archive.items?.[0]?.path;
-    const currentBriefing = currentPath ? await getJson(currentPath) : {};
-    renderTopStories(currentBriefing.topMacroStories ?? []);
+    try {
+      const currentBriefing = currentPath ? await getJson(currentPath) : {};
+      renderTopStories(currentBriefing.topMacroStories ?? []);
+    } catch (error) {
+      console.warn("Current briefing could not be loaded", error);
+      renderTopStories([], "Current briefing could not be loaded. Showing placeholder Top 5 slots.");
+    }
   } catch (error) {
     document.body.insertAdjacentHTML(
       "afterbegin",
