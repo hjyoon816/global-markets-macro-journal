@@ -1,0 +1,64 @@
+name: Update market data
+
+on:
+  schedule:
+    # 07:00 Asia/Seoul is 22:00 UTC on the previous calendar day.
+    - cron: "0 22 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-data-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Confirm main update target
+        run: |
+          git checkout -B main origin/main
+          current_branch="$(git branch --show-current)"
+          if [ "$current_branch" != "main" ]; then
+            echo "Refusing to update production data from $current_branch."
+            exit 1
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run market data update
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          BOK_ECOS_API_KEY: ${{ secrets.BOK_ECOS_API_KEY }}
+          ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
+          COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
+        run: python scripts/update_market_data.py
+
+      - name: Validate JSON
+        run: |
+          python -m json.tool data/market-data.json >/dev/null
+          python -m json.tool data/history.json >/dev/null
+          python -m json.tool data/archive.json >/dev/null
+          find data/daily -name '*.json' -print0 | xargs -0 -I{} python -m json.tool "{}" >/dev/null
+
+      - name: Commit changed data
+        run: |
+          if git diff --quiet -- data/market-data.json data/history.json; then
+            echo "No validated market data changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/market-data.json data/history.json
+          git commit -m "Update verified market data"
+          git push origin HEAD:main

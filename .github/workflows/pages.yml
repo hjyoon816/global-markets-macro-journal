@@ -5,6 +5,9 @@ on:
     branches:
       - main
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Update market data"]
+    types: [completed]
 
 permissions:
   contents: read
@@ -17,9 +20,17 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout main after market data update
+        if: github.event_name == 'workflow_run'
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
       - name: Checkout
+        if: github.event_name != 'workflow_run'
         uses: actions/checkout@v4
 
       - name: Configure Pages
