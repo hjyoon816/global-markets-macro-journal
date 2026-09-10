@@ -2,7 +2,14 @@ const DATA_URL = "data/market-data.json";
 const ARCHIVE_URL = "data/archive.json";
 const HISTORY_URL = "data/history.json";
 const PLACEHOLDER = "—";
+const ONE_HOUR_MS = 60 * 60 * 1000;
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+const FRESHNESS_THRESHOLDS_MS = {
+  intraday: 36 * ONE_HOUR_MS,
+  daily: 96 * ONE_HOUR_MS,
+  weekly: 14 * ONE_DAY_MS,
+  monthly: 62 * ONE_DAY_MS,
+};
 
 const appState = {
   chartRange: "3M",
@@ -69,51 +76,146 @@ async function getJson(url) {
   return response.json();
 }
 
-function classifyDataStatus(metadata) {
-  const lastSuccessfulUpdate = metadata?.lastSuccessfulUpdate;
+function normalizeFrequency(value) {
+  const normalized = text(value).toLowerCase();
+  if (normalized.includes("intraday")) {
+    return "intraday";
+  }
+  if (normalized.includes("monthly")) {
+    return "monthly";
+  }
+  if (normalized.includes("weekly")) {
+    return "weekly";
+  }
+  return "daily";
+}
 
-  if (isPlaceholder(lastSuccessfulUpdate)) {
+function formatFrequency(value) {
+  const normalized = normalizeFrequency(value);
+  return {
+    intraday: "Intraday",
+    daily: "Daily",
+    weekly: "Weekly",
+    monthly: "Monthly",
+  }[normalized];
+}
+
+function parseObservationTime(value) {
+  if (isPlaceholder(value)) {
+    return Number.NaN;
+  }
+
+  const raw = String(value).trim();
+  const normalized = /^\d{4}-\d{2}-\d{2}$/.test(raw) ? `${raw}T00:00:00Z` : raw;
+  return Date.parse(normalized);
+}
+
+function isMarketLike(item) {
+  return item && Object.hasOwn(item, "latest") && Object.hasOwn(item, "timestamp");
+}
+
+function classifyInstrumentFreshness(instrument, nowMs = Date.now()) {
+  if (!instrument?.verified || isPlaceholder(instrument.latest)) {
     return {
-      key: "setup",
-      label: "Setup / data pipeline pending",
-      detail: "No successful market-data update has been recorded.",
+      key: "unavailable",
+      label: "Unavailable",
+      ageMs: null,
     };
   }
 
-  const parsed = Date.parse(lastSuccessfulUpdate);
+  const parsed = parseObservationTime(instrument.timestamp);
   if (Number.isNaN(parsed)) {
     return {
-      key: "error",
-      label: "Timestamp unavailable",
-      detail: "lastSuccessfulUpdate is not a valid ISO timestamp.",
+      key: "stale",
+      label: "Stale",
+      ageMs: null,
     };
   }
 
-  const ageMs = Date.now() - parsed;
-  if (ageMs > ONE_DAY_MS) {
+  const frequency = normalizeFrequency(instrument.frequency);
+  const threshold = FRESHNESS_THRESHOLDS_MS[frequency] ?? FRESHNESS_THRESHOLDS_MS.daily;
+  const ageMs = nowMs - parsed;
+  if (ageMs > threshold || ageMs < -ONE_DAY_MS) {
     return {
       key: "stale",
-      label: "Stale data",
-      detail: "The latest successful update is more than 24 hours old.",
+      label: "Stale",
+      ageMs,
     };
   }
 
   return {
-    key: "current",
-    label: "Data current",
-    detail: "The latest successful update is within 24 hours.",
+    key: "fresh",
+    label: "Fresh",
+    ageMs,
+  };
+}
+
+function summarizeInstrumentFreshness(instruments, nowMs = Date.now()) {
+  return [...instruments].reduce(
+    (summary, instrument) => {
+      const status = classifyInstrumentFreshness(instrument, nowMs);
+      if (status.key === "fresh") {
+        summary.fresh += 1;
+      } else if (status.key === "stale") {
+        summary.stale += 1;
+      } else {
+        summary.unavailable += 1;
+      }
+      return summary;
+    },
+    { fresh: 0, stale: 0, unavailable: 0 },
+  );
+}
+
+function classifyDataStatus(metadata, instruments = [], nowMs = Date.now()) {
+  const summary = summarizeInstrumentFreshness(instruments, nowMs);
+  const counts = `${summary.fresh} fresh verified / ${summary.stale} stale verified / ${summary.unavailable} unavailable`;
+
+  if (summary.fresh === 0 && summary.stale === 0) {
+    return {
+      key: "setup",
+      label: "Setup / data pipeline pending",
+      detail: `No fresh verified market observations are available. ${counts}.`,
+      counts,
+    };
+  }
+
+  if (summary.fresh > 0 && summary.stale === 0 && summary.unavailable === 0) {
+    return {
+      key: "current",
+      label: "Current",
+      detail: `All verified market observations are within frequency-aware freshness thresholds. ${counts}.`,
+      counts,
+    };
+  }
+
+  if (summary.fresh > 0) {
+    return {
+      key: "mixed",
+      label: "Partial / mixed",
+      detail: `Some verified market observations are fresh, stale, or unavailable. ${counts}.`,
+      counts,
+    };
+  }
+
+  return {
+    key: "stale",
+    label: "Stale data",
+    detail: `Verified observations exist, but all are stale by frequency-aware thresholds. ${counts}.`,
+    counts,
   };
 }
 
 function renderDataStatus(metadata) {
-  const status = classifyDataStatus(metadata);
+  const status = classifyDataStatus(metadata, appState.instruments.values());
 
   byId("data-status-banner").innerHTML = `
     <article class="status-card ${escapeHtml(status.key)}">
       <span class="status-label">${escapeHtml(status.label)}</span>
       <div class="status-meta">
         <span>As of: ${escapeHtml(text(metadata?.asOf))}</span>
-        <span>Last successful update: ${escapeHtml(text(metadata?.lastSuccessfulUpdate))}</span>
+        <span>Last data change: ${escapeHtml(text(metadata?.lastDataChangeAt ?? metadata?.lastSuccessfulUpdate))}</span>
+        <span>Last pipeline run: ${escapeHtml(text(metadata?.lastPipelineRunAt))}</span>
         <span>Status: ${escapeHtml(text(metadata?.status))}</span>
         <span>${escapeHtml(status.detail)}</span>
       </div>
@@ -213,9 +315,21 @@ function sourceHtml(item) {
 }
 
 function statusChip(item) {
+  if (isMarketLike(item) && item.verified) {
+    const freshness = classifyInstrumentFreshness(item);
+    return `<span class="status-chip ${escapeHtml(freshness.key)}">${escapeHtml(freshness.label)}</span>`;
+  }
+
   const status = item.verified ? "verified" : text(item.status).toLowerCase();
   const label = item.verified ? "Verified" : text(item.status);
   return `<span class="status-chip ${escapeHtml(slug(status))}">${escapeHtml(label)}</span>`;
+}
+
+function instrumentMeta(instrument) {
+  return [instrument.region, instrument.assetClass, instrument.unit, instrument.frequency && formatFrequency(instrument.frequency)]
+    .filter((value) => !isPlaceholder(value))
+    .map(text)
+    .join(" / ");
 }
 
 function instrumentCard(instrument, options = {}) {
@@ -224,13 +338,15 @@ function instrumentCard(instrument, options = {}) {
   }
 
   const prominent = options.prominent ? " prominent" : "";
+  const freshness = classifyInstrumentFreshness(instrument);
+  const frequency = instrument.frequency ? formatFrequency(instrument.frequency) : "";
 
   return `
-    <article class="instrument-card${prominent}">
+    <article class="instrument-card${prominent} freshness-${escapeHtml(freshness.key)}">
       <div class="instrument-topline">
         <span>
           <span class="instrument-name">${escapeHtml(instrument.name)}</span>
-          <span class="instrument-meta">${escapeHtml(text(instrument.region))} / ${escapeHtml(text(instrument.assetClass))} / ${escapeHtml(text(instrument.unit))}</span>
+          <span class="instrument-meta">${escapeHtml(instrumentMeta(instrument))}</span>
         </span>
         ${statusChip(instrument)}
       </div>
@@ -249,6 +365,7 @@ function instrumentCard(instrument, options = {}) {
       </div>
       <div class="instrument-foot">
         <span>Timestamp: ${escapeHtml(text(instrument.timestamp))}</span>
+        ${frequency ? `<span>Frequency: ${escapeHtml(frequency)}</span>` : ""}
         <span>Source: ${sourceHtml(instrument)}</span>
         <span>Interpretation: ${escapeHtml(text(instrument.interpretation))}</span>
       </div>
@@ -302,14 +419,18 @@ function renderAssetBoards(groups) {
             </div>
             ${instruments
               .map(
-                (instrument) => `
-                  <div class="asset-row">
-                    <strong>${escapeHtml(instrument.name)}</strong>
+                (instrument) => {
+                  const freshness = classifyInstrumentFreshness(instrument);
+                  const frequency = instrument.frequency ? formatFrequency(instrument.frequency) : "";
+                  return `
+                  <div class="asset-row freshness-${escapeHtml(freshness.key)}">
+                    <strong>${escapeHtml(instrument.name)}${frequency ? `<small>${escapeHtml(frequency)}</small>` : ""}</strong>
                     <span class="${isPlaceholder(instrument.latest) ? "placeholder" : ""}">${escapeHtml(text(instrument.latest))}</span>
                     <span class="${changeClass(instrument.change1d)}">${escapeHtml(formatChange(instrument.change1d, instrument.changeUnit))}</span>
                     <span class="${changeClass(instrument.change1w)}">${escapeHtml(formatChange(instrument.change1w, instrument.changeUnit))}</span>
                   </div>
-                `,
+                `;
+                },
               )
               .join("")}
           </div>

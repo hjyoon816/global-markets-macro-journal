@@ -2,11 +2,14 @@
   "metadata": {
     "asOf": "2026-09-10T00:00:00+09:00",
     "lastSuccessfulUpdate": null,
+    "lastDataChangeAt": null,
+    "lastPipelineRunAt": null,
     "status": "setup",
     "dataPolicy": "Do not publish market values unless they are verified. Use — for unverified values.",
     "notes": [
       "Phase 3A adds live-capable provider adapters for selected instruments.",
-      "Missing or unverified market values remain placeholder-only until verified."
+      "Missing or unverified market values remain placeholder-only until verified.",
+      "Freshness is determined from instrument observation timestamps, not pipeline execution time."
     ]
   },
   "today": {
@@ -761,6 +764,7 @@
       "assetClass": "Commodities",
       "region": "Global",
       "unit": "USD/metric ton",
+      "frequency": "monthly",
       "latest": "—",
       "change1d": "—",
       "change1w": "—",

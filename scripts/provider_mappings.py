@@ -29,6 +29,8 @@ class ProviderMapping:
     priority: int = 100
     enabled: bool = True
     notes: str = ""
+    attribution_notes: str = ""
+    redistribution_review_required: bool = False
     stat_code: str | None = None
     item_code1: str | None = None
     cycle: str | None = None
@@ -134,21 +136,6 @@ FRED_SERIES = {
         sanity_min=-10.0,
         sanity_max=30.0,
     ),
-    "vix": ProviderMapping(
-        instrument_id="vix",
-        provider="FRED",
-        provider_symbol="VIXCLS",
-        expected_unit="index",
-        frequency="daily",
-        source_url="https://fred.stlouisfed.org/series/VIXCLS",
-        direct=True,
-        value_type="point_index",
-        change_unit="points",
-        history_series_id="vix",
-        priority=PROVIDER_PRIORITIES["FRED"],
-        sanity_min=0.0,
-        sanity_max=250.0,
-    ),
     "wti": ProviderMapping(
         instrument_id="wti",
         provider="FRED",
@@ -180,6 +167,10 @@ FRED_SERIES = {
         sanity_min=-100.0,
         sanity_max=1000.0,
     ),
+}
+
+
+FRED_DISABLED_SERIES = {
     "gold": ProviderMapping(
         instrument_id="gold",
         provider="FRED",
@@ -192,8 +183,29 @@ FRED_SERIES = {
         change_unit="%",
         history_series_id="gold",
         priority=PROVIDER_PRIORITIES["FRED"],
+        enabled=False,
         sanity_min=0.0,
         sanity_max=100000.0,
+        notes="Disabled because the IBA/LBMA daily gold price series was removed from FRED/API distribution in January 2022.",
+    ),
+    "vix": ProviderMapping(
+        instrument_id="vix",
+        provider="FRED",
+        provider_symbol="VIXCLS",
+        expected_unit="index",
+        frequency="daily",
+        source_url="https://fred.stlouisfed.org/series/VIXCLS",
+        direct=True,
+        value_type="point_index",
+        change_unit="points",
+        history_series_id="vix",
+        priority=PROVIDER_PRIORITIES["FRED"],
+        enabled=False,
+        sanity_min=0.0,
+        sanity_max=250.0,
+        notes="Disabled pending redistribution and attribution review for public GitHub Pages publication.",
+        attribution_notes="Cboe copyrighted data surfaced through FRED; citation/terms review required before automatic redistribution.",
+        redistribution_review_required=True,
     ),
     "copper": ProviderMapping(
         instrument_id="copper",
@@ -207,9 +219,12 @@ FRED_SERIES = {
         change_unit="%",
         history_series_id="copper",
         priority=PROVIDER_PRIORITIES["FRED"],
+        enabled=False,
         sanity_min=0.0,
         sanity_max=100000.0,
-        notes="Monthly IMF global copper price via FRED; 1D/1W changes are not calculated.",
+        notes="Monthly IMF global copper price via FRED; disabled pending redistribution and attribution review. 1D/1W changes are not calculated.",
+        attribution_notes="IMF copyrighted data surfaced through FRED; citation/terms review required before automatic redistribution.",
+        redistribution_review_required=True,
     ),
 }
 
@@ -367,6 +382,10 @@ ALPHA_VANTAGE_SERIES = {
         sanity_min=100.0,
         sanity_max=10000.0,
     ),
+}
+
+
+ALPHA_VANTAGE_PLACEHOLDER_SERIES = {
     "spx": ProviderMapping(
         instrument_id="spx",
         provider="Alpha Vantage",
@@ -379,11 +398,12 @@ ALPHA_VANTAGE_SERIES = {
         change_unit="%",
         history_series_id="spx",
         priority=PROVIDER_PRIORITIES["Alpha Vantage"],
+        enabled=False,
         function="INDEX_DATA",
         symbol="SPX",
         sanity_min=100.0,
         sanity_max=100000.0,
-        notes="Accepted only when INDEX_CATALOG confirms the symbol is an actual index.",
+        notes="Disabled by default because Alpha Vantage INDEX_DATA is a Premium endpoint.",
     ),
     "ndx": ProviderMapping(
         instrument_id="ndx",
@@ -397,16 +417,13 @@ ALPHA_VANTAGE_SERIES = {
         change_unit="%",
         history_series_id="ndx",
         priority=PROVIDER_PRIORITIES["Alpha Vantage"],
+        enabled=False,
         function="INDEX_DATA",
         symbol="NDX",
         sanity_min=100.0,
         sanity_max=200000.0,
-        notes="Accepted only when INDEX_CATALOG confirms the symbol is an actual index.",
+        notes="Disabled by default because Alpha Vantage INDEX_DATA is a Premium endpoint.",
     ),
-}
-
-
-ALPHA_VANTAGE_PLACEHOLDER_SERIES = {
     "kospi": ProviderMapping(
         instrument_id="kospi",
         provider="Alpha Vantage",
@@ -544,6 +561,7 @@ DERIVED_SERIES = {
 
 ALL_SOURCE_MAPPINGS = {
     **FRED_SERIES,
+    **FRED_DISABLED_SERIES,
     **BOK_SERIES,
     **ALPHA_VANTAGE_SERIES,
     **ALPHA_VANTAGE_PLACEHOLDER_SERIES,
