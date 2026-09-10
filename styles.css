@@ -239,6 +239,10 @@ h4 {
   border-left-color: var(--green);
 }
 
+.status-card.mixed {
+  border-left-color: var(--plum);
+}
+
 .status-card.stale {
   border-left-color: var(--amber);
 }
@@ -395,7 +399,8 @@ h4 {
   color: var(--plum);
 }
 
-.status-chip.verified {
+.status-chip.verified,
+.status-chip.fresh {
   border-color: rgba(45, 112, 80, 0.2);
   background: rgba(45, 112, 80, 0.1);
   color: var(--green);
@@ -403,7 +408,8 @@ h4 {
 
 .status-chip.unverified,
 .status-chip.pending,
-.status-chip.setup {
+.status-chip.setup,
+.status-chip.unavailable {
   border-color: rgba(38, 95, 159, 0.22);
   background: rgba(38, 95, 159, 0.08);
   color: var(--blue);
@@ -506,6 +512,10 @@ h4 {
   font-variant-numeric: tabular-nums;
 }
 
+.instrument-card.freshness-stale {
+  border-left: 4px solid var(--amber);
+}
+
 .instrument-changes {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -584,9 +594,22 @@ h4 {
   font-size: 0.82rem;
 }
 
+.asset-row.freshness-stale {
+  border-left: 4px solid var(--amber);
+}
+
 .asset-row strong,
 .asset-row span {
   min-width: 0;
+}
+
+.asset-row strong small {
+  display: block;
+  margin-top: 3px;
+  color: var(--quiet);
+  font-size: 0.66rem;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .top-stories-list {

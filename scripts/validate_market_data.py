@@ -18,12 +18,13 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from provider_mappings import ALL_SOURCE_MAPPINGS
+from provider_mappings import ALPHA_VANTAGE_SERIES, ALL_SOURCE_MAPPINGS, FRED_SERIES
 from update_market_data import is_absolute_http_url, is_missing, parse_float
 
 
 PUBLISHABLE_FIELDS = ("latest", "change1d", "change1w")
 PROVENANCE_FIELDS = ("timestamp", "sourceName", "sourceUrl")
+FRESHNESS_FREQUENCIES = {"intraday", "daily", "weekly", "monthly"}
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -44,6 +45,16 @@ def is_iso_date(value: Any) -> bool:
 def is_numeric(value: Any) -> bool:
     parsed = parse_float(value)
     return parsed is not None and math.isfinite(parsed)
+
+
+def normalize_frequency(value: Any) -> str | None:
+    if is_missing(value):
+        return None
+    normalized = str(value).strip().lower()
+    for frequency in FRESHNESS_FREQUENCIES:
+        if frequency in normalized:
+            return frequency
+    return None
 
 
 def validate_unique_ids(items: list[dict[str, Any]], label: str, errors: list[str]) -> None:
@@ -78,6 +89,8 @@ def validate_instruments(data: dict[str, Any], errors: list[str]) -> None:
                     errors.append(f"{instrument_id}: verified {field_name} is required")
             if not is_absolute_http_url(instrument.get("sourceUrl")):
                 errors.append(f"{instrument_id}: verified sourceUrl must be absolute http(s)")
+            if normalize_frequency(instrument.get("frequency")) is None:
+                errors.append(f"{instrument_id}: verified frequency is required for freshness classification")
             for field_name in ("change1d", "change1w"):
                 if not is_missing(instrument.get(field_name)) and not is_numeric(instrument.get(field_name)):
                     errors.append(f"{instrument_id}: {field_name} must be numeric when present")
@@ -102,6 +115,19 @@ def validate_history(history: dict[str, Any], errors: list[str]) -> None:
             errors.append(f"{mapping.instrument_id}: missing history series {mapping.history_series_id}")
         if mapping.enabled and not is_absolute_http_url(mapping.source_url):
             errors.append(f"{mapping.instrument_id}: mapping source_url must be absolute http(s)")
+        if mapping.enabled and mapping.redistribution_review_required:
+            errors.append(f"{mapping.instrument_id}: redistribution-review mapping must not be enabled by default")
+
+    if "gold" in FRED_SERIES or any(mapping.provider_symbol == "GOLDAMGBD228NLBM" for mapping in FRED_SERIES.values()):
+        errors.append("obsolete FRED gold mapping GOLDAMGBD228NLBM must not be live-enabled")
+
+    premium_index_ids = [
+        mapping.instrument_id
+        for mapping in ALPHA_VANTAGE_SERIES.values()
+        if mapping.enabled and mapping.function == "INDEX_DATA"
+    ]
+    if premium_index_ids:
+        errors.append(f"Alpha Vantage premium INDEX_DATA mappings must not be enabled by default: {', '.join(premium_index_ids)}")
 
     for series in series_list:
         series_id = series.get("id", "<missing>")

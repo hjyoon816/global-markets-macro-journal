@@ -1,13 +1,14 @@
 import json
 import sys
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
 
 SCRIPTS_DIR = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 import update_market_data as updater  # noqa: E402
-from provider_mappings import ALPHA_VANTAGE_SERIES, FRED_SERIES  # noqa: E402
+from provider_mappings import ALPHA_VANTAGE_SERIES, BOK_SERIES, FRED_DISABLED_SERIES, FRED_SERIES  # noqa: E402
 
 
 SOURCE_URL = "https://example.com/source"
@@ -338,6 +339,7 @@ def test_provider_failure_does_not_block_other_updates(monkeypatch, tmp_path):
     data = read_json(data_path)
     assert data["instruments"][0]["latest"] == 4.25
     assert data["metadata"]["lastSuccessfulUpdate"]
+    assert data["metadata"]["lastDataChangeAt"]
     assert data["metadata"]["providerStatus"][0]["status"] == "failed"
 
 
@@ -366,3 +368,168 @@ def test_zero_accepted_updates_do_not_advance_metadata(monkeypatch, tmp_path):
     data = read_json(data_path)
     assert data["metadata"]["lastSuccessfulUpdate"] is None
     assert "providers" not in data["metadata"]
+
+
+def test_same_unchanged_observation_does_not_refresh_freshness_metadata(monkeypatch, tmp_path):
+    data_path = tmp_path / "market-data.json"
+    history_path = tmp_path / "history.json"
+    old_timestamp = "2026-09-09T00:00:00+00:00"
+    data = minimal_market_doc(verified=True)
+    data["metadata"]["lastSuccessfulUpdate"] = old_timestamp
+    data["metadata"]["lastDataChangeAt"] = old_timestamp
+    data["metadata"]["lastPipelineRunAt"] = old_timestamp
+    instrument = data["instruments"][0]
+    instrument.update(
+        {
+            "latest": 4.25,
+            "change1d": 1,
+            "timestamp": "2026-09-09",
+            "sourceName": "Test source",
+            "sourceUrl": SOURCE_URL,
+            "frequency": "daily",
+        }
+    )
+    history = minimal_history_doc(
+        [
+            {
+                "date": "2026-09-09",
+                "value": 4.25,
+                "timestamp": "2026-09-09",
+                "sourceName": "Test source",
+                "sourceUrl": SOURCE_URL,
+                "verified": True,
+            }
+        ]
+    )
+    write_json(data_path, data)
+    write_json(history_path, history)
+
+    class SameObservationAdapter:
+        name = "Same"
+
+        def fetch_updates(self):
+            return updater.ProviderResult(
+                "Same",
+                "ok",
+                updates=[
+                    verified_update(
+                        fields={
+                            "latest": 4.25,
+                            "change1d": 1,
+                            "timestamp": "2026-09-09",
+                            "sourceName": "Test source",
+                            "sourceUrl": SOURCE_URL,
+                            "frequency": "daily",
+                        }
+                    )
+                ],
+                history_updates=[history_update(4.25, "2026-09-09")],
+                message="Same: ok",
+            )
+
+    monkeypatch.setattr(updater, "provider_adapters", lambda _: [SameObservationAdapter()])
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["update_market_data.py", "--data-file", str(data_path), "--history-file", str(history_path)],
+    )
+
+    assert updater.main() == 0
+    updated = read_json(data_path)
+    assert updated["metadata"]["lastDataChangeAt"] == old_timestamp
+    assert updated["metadata"]["lastSuccessfulUpdate"] == old_timestamp
+    assert updated["metadata"]["lastPipelineRunAt"] == old_timestamp
+
+
+def test_obsolete_fred_gold_mapping_is_disabled():
+    assert "gold" not in FRED_SERIES
+    assert FRED_DISABLED_SERIES["gold"].provider_symbol == "GOLDAMGBD228NLBM"
+    assert FRED_DISABLED_SERIES["gold"].enabled is False
+
+
+def test_alpha_vantage_free_adapter_does_not_attempt_premium_indices(monkeypatch):
+    monkeypatch.setenv("ALPHA_VANTAGE_API_KEY", "demo")
+    urls = []
+
+    class FakeClient:
+        def get_json(self, url, headers=None):
+            urls.append(url)
+            query = parse_qs(urlparse(url).query)
+            to_symbol = query.get("to_symbol", ["USD"])[0]
+            latest = {
+                "USD": "1.10",
+                "JPY": "150.0",
+                "CNH": "7.20",
+                "KRW": "1350.0",
+            }[to_symbol]
+            previous = {
+                "USD": "1.09",
+                "JPY": "149.0",
+                "CNH": "7.15",
+                "KRW": "1340.0",
+            }[to_symbol]
+            return {
+                "Time Series FX (Daily)": {
+                    "2026-09-09": {"4. close": latest},
+                    "2026-09-08": {"4. close": previous},
+                }
+            }
+
+    result = updater.AlphaVantageAdapter(client=FakeClient()).fetch_updates()
+
+    assert result.status == "ok"
+    assert {update.instrument_id for update in result.updates} == {"eurusd", "usdjpy", "usdcnh", "usdkrw"}
+    assert all("INDEX_DATA" not in url for url in urls)
+    assert all("INDEX_CATALOG" not in url for url in urls)
+    assert all(mapping.function == "FX_DAILY" for mapping in ALPHA_VANTAGE_SERIES.values())
+
+
+def test_bok_metadata_paginates_until_item_is_found(monkeypatch):
+    monkeypatch.setenv("BOK_ECOS_API_KEY", "sample")
+    urls = []
+
+    class FakeClient:
+        def get_json(self, url, headers=None):
+            urls.append(url)
+            if "/1/100/" in url:
+                return {
+                    "StatisticItemList": {
+                        "list_total_count": 101,
+                        "row": [{"ITEM_CODE": "not-target", "CYCLE": "D"}],
+                    }
+                }
+            return {
+                "StatisticItemList": {
+                    "list_total_count": 101,
+                    "row": [{"ITEM_CODE": "010210000", "CYCLE": "D"}],
+                }
+            }
+
+    updater.BokEcosAdapter(client=FakeClient()).verify_item_metadata(BOK_SERIES["ktb10y"])
+
+    assert len(urls) == 2
+    assert "/101/200/" in urls[1]
+
+
+def test_bok_metadata_pagination_is_bounded(monkeypatch):
+    monkeypatch.setenv("BOK_ECOS_API_KEY", "sample")
+
+    class FakeClient:
+        def get_json(self, url, headers=None):
+            return {
+                "StatisticItemList": {
+                    "list_total_count": 10,
+                    "row": [{"ITEM_CODE": "not-target", "CYCLE": "D"}],
+                }
+            }
+
+    adapter = updater.BokEcosAdapter(client=FakeClient())
+    adapter.metadata_page_size = 2
+    adapter.metadata_max_rows = 3
+
+    try:
+        adapter.verify_item_metadata(BOK_SERIES["ktb10y"])
+    except updater.ProviderError as error:
+        assert "exceeded safe maximum" in str(error)
+    else:
+        raise AssertionError("Expected bounded pagination failure")

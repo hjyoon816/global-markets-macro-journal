@@ -7,7 +7,7 @@ The pipeline is deliberately conservative:
 - providers fail independently
 - unverified or malformed observations are rejected before mutation
 - history points are only appended/upserted from verified observations
-- global update metadata advances only when at least one verified change is applied
+- global update metadata advances only when a verified market or history observation changes
 """
 
 from __future__ import annotations
@@ -55,6 +55,7 @@ ALLOWED_UPDATE_FIELDS = {
     "interpretation",
     "unit",
     "changeUnit",
+    "frequency",
     "derived",
     "inputs",
 }
@@ -135,10 +136,6 @@ class ApplySummary:
     @property
     def changed(self) -> bool:
         return self.market_field_changes > 0 or self.history_point_changes > 0
-
-    @property
-    def accepted_verified_market_updates(self) -> bool:
-        return bool(self.applied_instruments)
 
 
 class JsonHttpClient:
@@ -238,6 +235,13 @@ def parse_float(value: Any) -> float | None:
     except (TypeError, ValueError):
         return None
     return parsed if math.isfinite(parsed) else None
+
+
+def parse_int(value: Any) -> int | None:
+    parsed = parse_float(value)
+    if parsed is None:
+        return None
+    return int(parsed)
 
 
 def round_market_value(value: float) -> float:
@@ -353,6 +357,7 @@ def build_updates_from_observations(
         "sourceUrl": mapping.source_url,
         "unit": mapping.expected_unit,
         "changeUnit": mapping.change_unit,
+        "frequency": mapping.frequency,
         "derived": not mapping.direct,
     }
     if change_1d is not None:
@@ -469,9 +474,6 @@ def apply_updates(data: dict[str, Any], updates: list[InstrumentUpdate]) -> tupl
             LOGGER.warning("Ignoring update for unknown instrument id %s", update.instrument_id)
             continue
 
-        if update.instrument_id not in applied_ids:
-            applied.append(update.instrument_id)
-            applied_ids.add(update.instrument_id)
         applied_priorities[update.instrument_id] = update.priority
         update_changed = False
         for field_name, raw_incoming in update.fields.items():
@@ -508,6 +510,10 @@ def apply_updates(data: dict[str, Any], updates: list[InstrumentUpdate]) -> tupl
             instrument["status"] = "verified"
             changed += 1
             update_changed = True
+
+        if update_changed and update.instrument_id not in applied_ids:
+            applied.append(update.instrument_id)
+            applied_ids.add(update.instrument_id)
 
     return changed, tuple(applied)
 
@@ -742,6 +748,8 @@ class BokEcosAdapter(ProviderAdapter):
     name = "BOK ECOS"
     provider_key = "bok"
     required_env = ("BOK_ECOS_API_KEY",)
+    metadata_page_size = 100
+    metadata_max_rows = 5000
 
     def __init__(self, client: JsonHttpClient | None = None):
         super().__init__(client)
@@ -763,11 +771,45 @@ class BokEcosAdapter(ProviderAdapter):
         if stat_code in self.item_cache:
             return self.item_cache[stat_code]
 
-        payload = self.client.get_json(self.ecos_url("StatisticItemList", "1", "100", stat_code))
-        if not isinstance(payload, dict):
-            raise ProviderError("ECOS metadata response was not an object")
-        self.check_ecos_error(payload)
-        rows = payload.get("StatisticItemList", {}).get("row", [])
+        rows: list[dict[str, Any]] = []
+        total_count: int | None = None
+        start = 1
+
+        while start <= self.metadata_max_rows:
+            end = min(start + self.metadata_page_size - 1, self.metadata_max_rows)
+            payload = self.client.get_json(self.ecos_url("StatisticItemList", str(start), str(end), stat_code))
+            if not isinstance(payload, dict):
+                raise ProviderError("ECOS metadata response was not an object")
+            self.check_ecos_error(payload)
+
+            section = payload.get("StatisticItemList", {})
+            if not isinstance(section, dict):
+                raise ProviderError("ECOS metadata response did not contain StatisticItemList")
+
+            if total_count is None:
+                total_count = parse_int(section.get("list_total_count"))
+
+            batch = section.get("row", [])
+            if isinstance(batch, dict):
+                batch = [batch]
+            if not isinstance(batch, list):
+                raise ProviderError("ECOS metadata rows were malformed")
+            rows.extend(row for row in batch if isinstance(row, dict))
+
+            if total_count is not None and end >= total_count:
+                break
+            if total_count is None and len(batch) < self.metadata_page_size:
+                break
+            if not batch:
+                break
+
+            start = end + 1
+        else:
+            raise ProviderError("ECOS metadata pagination exceeded safe maximum")
+
+        if total_count is not None and total_count > self.metadata_max_rows:
+            raise ProviderError("ECOS metadata row count exceeded safe maximum")
+
         self.item_cache[stat_code] = rows
         return rows
 
@@ -1071,6 +1113,7 @@ class CoinGeckoAdapter(ProviderAdapter):
                 "sourceUrl": mapping.source_url,
                 "unit": mapping.expected_unit,
                 "changeUnit": mapping.change_unit,
+                "frequency": mapping.frequency,
                 "derived": False,
             }
             updates.append(
@@ -1208,6 +1251,7 @@ def build_derived_updates(
             "sourceUrl": mapping.source_url,
             "unit": mapping.expected_unit,
             "changeUnit": mapping.change_unit,
+            "frequency": mapping.frequency,
             "derived": True,
             "inputs": [
                 {
@@ -1358,14 +1402,16 @@ def main() -> int:
     market_changed, applied_instruments = apply_updates(data, updates)
     history_changed = apply_history_updates(history, history_updates)
     summary = ApplySummary(market_changed, history_changed, applied_instruments)
-    if not summary.accepted_verified_market_updates:
-        LOGGER.info("No verified market observations were accepted. Existing files left untouched.")
+    if not summary.changed:
+        LOGGER.info("No verified market or history observations changed. Existing files left untouched.")
         return 0
 
     now = datetime.now(timezone.utc).isoformat()
     metadata = data.setdefault("metadata", {})
     metadata["asOf"] = now
+    metadata["lastDataChangeAt"] = now
     metadata["lastSuccessfulUpdate"] = now
+    metadata["lastPipelineRunAt"] = now
     metadata["status"] = "updated"
     metadata["providers"] = provider_metadata(results, now)
     metadata["providerStatus"] = [
